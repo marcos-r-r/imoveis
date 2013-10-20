@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '~> 3.2.13'
+gem 'rack', '~> 1.4.5'
 
 
 gem 'mysql2'
@@ -41,6 +42,13 @@ gem 'inploy'
 gem 'money'
 gem 'lazy_high_charts', :git => 'git://github.com/michelson/lazy_high_charts.git'
 #gem 'sql_funk'
+
+
+# This version needs to be hardcoded for OpenShift compatibility
+gem 'thor', '= 0.14.6'
+
+# This needs to be installed so we can run Rails console on OpenShift directly
+gem 'minitest'
 
 # Use unicorn as the web server
 # gem 'unicorn'
