@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id empreendimento:</b>
+  <%= @espaco.empreendimento_id %>
+</p>
+
+<p>
+  <b>Id pavimento:</b>
+  <%= @espaco.pavimento_id %>
+</p>
+
+<p>
+  <b>Tipo de espaco:</b>
+  <%= @espaco.tipo_de_espaco %>
+</p>
+
+<p>
+  <b>Identificacao:</b>
+  <%= @espaco.identificacao %>
+</p>
+
+<p>
+  <b>Area:</b>
+  <%= @espaco.area %>
+</p>
+
+<p>
+  <b>Valor m2:</b>
+  <%= @espaco.valor_m2 %>
+</p>
+
+<p>
+  <b>Valor total:</b>
+  <%= @espaco.valor_total %>
+</p>
+
+<p>
+  <b>Planta:</b>
+  <%= image_tag @espaco.planta.thumb('100x100').url if @espaco.planta %>
+</p>
+
+
+<%= link_to 'Edit', edit_espaco_path(@espaco) %> |
+<%= link_to 'Back', espacos_path %>

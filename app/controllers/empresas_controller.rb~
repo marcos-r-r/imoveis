@@ -1,0 +1,18 @@
+class EmpresasController < InheritedResources::Base
+	before_filter :require_user_and_tipo
+	
+	def atualiza_empresa
+     empresa = Empresa.find_by_id(params[:empresa_atual]) 
+     session[:empresa_atual] = empresa
+     redirect_to (:back)
+  end
+	def create
+	create!
+	if @current_usuario.empresa_id.nil?
+		@current_usuario.empresa_id = @empresa.id
+		@current_usuario.save
+	end
+		
+	end
+  
+end

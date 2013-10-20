@@ -1,0 +1,6 @@
+$('#conteudo-cliente').hide(200);
+$('#conteudo-cliente').empty();
+$('#conteudo-cliente').delay(400).append("<%= escape_javascript(render 'index') %>");
+
+$('#conteudo-cliente').delay(300).slideToggle(700);
+

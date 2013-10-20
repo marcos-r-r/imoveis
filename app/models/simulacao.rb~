@@ -1,0 +1,5 @@
+class Simulacao < ActiveRecord::Base
+
+	belongs_to :historico_de_contato
+
+end

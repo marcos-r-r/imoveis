@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  empreendimento_id: MyString
+  andar: MyString
+  planta_pavimento: MyString
+
+two:
+  empreendimento_id: MyString
+  andar: MyString
+  planta_pavimento: MyString

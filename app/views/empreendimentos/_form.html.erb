@@ -1,0 +1,49 @@
+<%= form_for @empreendimento, :html=>{:class =>"form"} do |f| %>
+    <% if @empreendimento.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@empreendimento.errors.count, "error") %> prohibited this empreendimento from being saved:</h2>
+
+          <ul>
+            <% @empreendimento.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+      <% unless @current_usuario.empresa_id != "1" %>
+
+          <%= hidden_field(:empreendimento, :empresa_id, {:value => session[:empresa_atual].id}) %>
+
+      <% else %>
+
+          <%= hidden_field(:empreendimento, :empresa_id, :value => @current_usuario.empresa_id) %>
+
+      <% end %>
+    </div>
+    <div class="field">
+      <%= f.text_field :codigo %>
+      <%= f.label "Código" %><br />
+    </div>
+    <div class="field">
+      <%= f.text_field :nome_do_empreendimento %>
+      <%= f.label "Nome do Empreendimento" %><br />
+    </div>
+    <div class="field">
+      <%= f.text_field :cub %>
+      <%= f.label "Valor do CUB" %><br />
+    </div>
+    <div class="field">
+      <%= f.text_field :dias_val_neg %>
+      <%= f.label "Validade das negociações(dias)" %><br />
+    </div>
+    <div class="field">
+      <%= f.check_box :ativo %>
+      <%= f.label "Ativo" %><br />
+    </div>
+    <div style="min-height: 15px;"></div>
+    <div class="actions">
+      <%= f.submit "Salvar", :class=>"button red"%>
+    </div>
+    <div style="min-height: 15px;"></div>
+<% end %>

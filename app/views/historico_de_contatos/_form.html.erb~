@@ -1,0 +1,159 @@
+<%= form_for@historico_de_contato,:html=>{:class => "form"} do |f| %>
+  <% if @historico_de_contato.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@historico_de_contato.errors.count, "error") %> prohibited this historico_de_contato from being saved:</h2>
+
+      <ul>
+      <% @historico_de_contato.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	
+	<section class="grid_12">
+			<div class="block-border"><div class="block-content">
+				<h1>Negociação</h1>
+
+	<div class="content-columns left30">
+					
+					<div class="content-columns-sep"></div>
+					<div class="content-left">
+					<div class="dark-grey-gradient with-padding" style="height:600px; overflow: auto">
+
+								<div class="" style="float:left; margin-right:15px;">
+								<!--<h1><%= f.label :data %></h1>-->
+								<%= f.hidden_field :data %>
+								<span>Cliente</span>
+							<%= collection_select(:historico_de_contato, :cliente_id, Cliente.find_all_by_empresa_id(session[:empresa_atual]), :id, :nome, {:prompt => 'Selecione o Cliente'}) %>
+								</div>
+								<div class="">
+									<span>Usuario</span>
+									<%= f.label @current_usuario.nome %>
+									<%= f.hidden_field :usuario_id, :value => @current_usuario.id %>
+								</div> 
+								
+								<div class="favorites" style="float:left; margin-right:15px;">
+									<h3 style="color:#cccccc;">Tipo</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.tipo_de_espaco if @espaco %></h5></ul>
+								</div>
+								<div class="favorites">
+									<h3 style="color:#cccccc;">Unidade</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.identificacao if @espaco %></h5></ul>
+									<%= f.hidden_field :espaco_id, :value => @espaco.id if @espaco %>
+								</div>
+								<div class="favorites"  style="">
+									<h3 style="color:#cccccc;">Área</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.area if @espaco %></h5></ul>
+									<h3 style="color:#cccccc;">Valor M²</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.valor_m2 if @espaco %></h5></ul>
+									<h3 style="color:#cccccc;">Valor Total</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.valor_total if @espaco %></h5></ul>
+								
+								</div>
+								<div>
+								
+  											<% unless @current_usuario.empresa_id != "1" %>
+											<%= hidden_field(:historico_de_contato, :empresa_id, {:value => session[:empresa_atual].id}) %>
+											<% else %>
+											<%= hidden_field(:historico_de_contato, :empresa_id, :value => @current_usuario.empresa_id) %>
+											<% end %>
+  							</div>
+								<div style="min-height:20px"></div>
+								<div class="favorites">
+									<h3 style="color:#cccccc;">Empreendimento</h3>
+									<ul class="button"><h3 class="big"><%= @espaco.empreendimento.nome_do_empreendimento %></h5></ul>
+									<%= f.hidden_field :empreendimento_id, :value => @espaco.empreendimento_id if @espaco %>
+								</div>
+								<div class="favorites">
+									<h3 style="color:#cccccc;">Detalhes da Negociação</h3>
+									<%= f.text_area :negociacao %>
+								</div>
+								<ul class="checkable-list">
+									<li><%= f.radio_button :status, "0" %> Disponível </li>
+									<li><%= f.radio_button :status, "1" %> Em negociação </li>
+									<li><%= f.radio_button :status, "2" %> Vendido </li>
+								</ul>
+	</div>
+  </div> 
+  
+  
+	<div class="content-right"><div class="dark-grey-gradient with-padding" style="height:600px; overflow: auto">
+  
+  
+  	
+  	<legend style="margin-left:3px;">Vagas Relacionadas</legend>    
+		<ul class="grid">
+		<% session[:vagas] = [] %>
+  	<% @vagas.uniq.each do |relacionada| %>
+		<% if relacionada != [] %>
+			<li>
+				<%= link_to "<div class='grid-picto'>
+						<legend style='background:#d82247'></legend>
+            <small>#{ Espaco.find_by_id(relacionada).pavimento.andar }</small>
+            <p class='grid-name'>#{Espaco.find_by_id(relacionada).identificacao}</p>
+            <p class='grid-details'>Area: <b>#{ Espaco.find_by_id(relacionada).area }</b><br>
+            
+        </div>".html_safe, {:action => "remove_vaga", :id => relacionada}, :method => "post" %>
+    <!--<td><%= Espaco.find_by_id(relacionada).identificacao %></td>
+    <td><%= Espaco.find_by_id(relacionada).area %></td>
+    <td><%= link_to 'Planta', Espaco.find_by_id(relacionada).planta.url, :target => "_blank" if Espaco.find_by_id(relacionada).planta %></td>
+    <td><%= link_to 'Remover', {:action => "remove_vaga", :id => relacionada}, confirm: 'Are you sure?', :method => "post" %></td>-->
+		<% session[:vagas] << relacionada %>	
+		</li>    
+		<% end %>	
+   
+  	
+		<% end %>
+		</ul>
+	
+  	<legend style="margin-left:5px;">Vagas Disponíveis</legend>    
+		<ul class="grid">
+  	<% @vagas_disponiveis_fim.uniq.each do |vaga| %>
+  	 		<li>
+				<%= link_to "<div class='grid-picto'>
+						<legend style='background:#cccccc'></legend>
+            <small>#{ Espaco.find_by_id(vaga).pavimento.andar }</small>
+            <p class='grid-name'>#{Espaco.find_by_id(vaga).identificacao}</p>
+            <p class='grid-details'>Area: <b>#{ Espaco.find_by_id(vaga).area }</b><br>
+            
+        </div>".html_safe, {:action => "adiciona_vaga", :espaco_id => vaga, :espaco => @espaco }, :method => "post" %>
+  			</li>
+    
+    <!--<td><%= Espaco.find_by_id(vaga).identificacao %></td>
+    <td><%= Espaco.find_by_id(vaga).area %></td>
+    <td><%= link_to 'planta', Espaco.find_by_id(vaga).planta.url, :target => "_blank" if Espaco.find_by_id(vaga).planta %></td>
+    <td><%= link_to 'Adicionar', {:action => "adiciona_vaga", :espaco_id => vaga, :espaco => @espaco }, :method => "post" %> </td>-->
+    
+   
+  	</tr>
+		<% end %>
+		</ul>
+  <div class="field">
+   
+  	<%= button_tag "Simulacao", :type=>"button", :class => "simulador" %> 
+		<div id="pegardados_simulador" style="display: none;">
+
+		<%= f.fields_for :simulacao do |b| %>
+		<%= render "simulador", :f => b %>
+
+		<% end %>
+	
+ 
+		<div id="msg_autofill" style="display: none;">
+		</div>
+		</div>
+	</div>
+</div></div></div>
+	<div class="block-footer" style="min-height:30px;">
+		<div class="float-right">
+		  <%= f.submit "Salvar Negociação", :class=>"button red" %>
+			<%= link_to 'Voltar', {:controller => "espacos", :action => "dashboard"}, :class=>"button" %>
+		</div>
+	</div>
+</div>
+	</div></div>
+</section>
+<% end %>
+

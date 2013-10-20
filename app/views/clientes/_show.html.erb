@@ -1,0 +1,80 @@
+<article class="container_12">
+	<section class="grid_4" style="float: left">
+		<div class="block-border"><div class="block-content">
+			<h1>Cliente</h1>
+			<p>
+				<h3><%= @cliente.empresa.nome %></h3>
+				<b class="smaller">Empresa</b>
+			</p>
+			<p>
+				<h3><%= @cliente.tipo %></h3>
+				<b class="smaller">Tipo</b>
+			</p>
+			<p>
+				<h3><%= @cliente.nome %></h3>
+				<b class="smaller">Nome</b>
+			</p>
+			<p>
+				<h3><%= @cliente.cpf_cnpj %></h3>
+				<b class="smaller">Cpf cnpj</b>
+			</p>
+			<p>
+				<h3><%= @cliente.endereco %></h3>
+				<b class="smaller">Endereco</b>
+			</p>
+			<p>
+				<h3><%= @cliente.ddd + ' - ' + @cliente.telefone %></h3>
+				<b class="smaller">Telefone</b>
+			</p>
+			<p>
+				<h3><%= @cliente.nome_contato %></h3>
+				<b class="smaller">Nome contato</b>
+			</p>
+		</div></div>
+	</section>
+<% if @historicos %>
+<section class="grid_8" style="float: right;">
+	<div class="block-border" style="width: 500px;">
+		<table class="table" cellspacing="0" width="500px">
+			<thead>
+				<tr>
+					<!-- This is a special cell for loading statuses - see below for more -->
+					<th scope="col">Data</th>
+					<th scope="col">Vendedor</th>
+					<th scope="col">Observacao</th>
+					<!--<th scope="col" class="table-actions">Ações</th>-->
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="6"><img src="images/icons/fugue/arrow-curve-000-left.png" width="16" height="16" class="picto"><b>Total:</b> <%= @historicos.size %> cadastros encontrados</td>
+					<!-- ><td><a href="#" class="button"><img src="images/icons/fugue/cross-circle.png" width="16" height="16"> delete all</a></td> -->
+				</tr>
+			</tfoot>
+			<tbody>
+				<% @historicos.uniq.each do |historico| %>
+				<% @data= historico.updated_at %>
+				<tr>
+					<td><%= link_to @data.to_date.strftime('%d, %b %Y'),  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post", :remote => true %> </td>
+					<td><%= link_to historico.usuario.nome,  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post", :remote => true %></td>
+					<td><%= link_to historico.negociacao[0,30] + "...",  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post", :remote => true %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+<div class="clear"></div>
+<div style="min-height: 15px;"></div>
+<!--<article class="container_12"> -->
+<div id="negociacao" style="display: none">
+	
+</div>
+
+</section>
+<% end %>
+</article>
+</article>
+<div>
+	<%= link_to 'Editar Dados do Cliente', edit_cliente_path(@cliente), :class =>"button", :remote => true %> |
+	<%= link_to 'Voltar', clientes_path, :class => "button", :remote => true %>
+</div>

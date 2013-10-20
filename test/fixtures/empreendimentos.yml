@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  empresa_id: MyString
+  codigo: MyString
+  nome_do_empreendimento: MyString
+  ativo: false
+
+two:
+  empresa_id: MyString
+  codigo: MyString
+  nome_do_empreendimento: MyString
+  ativo: false

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ssimovel</title>
+	
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag    "css/reset.css" %>
+	<%= stylesheet_link_tag    "css/common.css" %>
+	<%= stylesheet_link_tag    "css/form.css" %>
+	<%= stylesheet_link_tag    "css/standard.css" %>
+	<%= stylesheet_link_tag    "css/960.gs.fluid.css" %>
+	<%= stylesheet_link_tag    "css/simple-lists.css" %>
+	<%= stylesheet_link_tag    "css/block-lists.css" %>
+	<%= stylesheet_link_tag    "css/planning.css" %>
+	<%= stylesheet_link_tag    "css/table.css" %>
+	<%= stylesheet_link_tag    "css/calendars.css" %>
+	<%= stylesheet_link_tag    "css/wizard.css" %>
+	<%= stylesheet_link_tag    "css/gallery.css" %>
+  <%= javascript_include_tag "js/html5.js" %>
+  <%= javascript_include_tag "js/jquery-1.4.2.min.js" %>
+  <%= javascript_include_tag "js/old-browsers.js" %>
+  <%= javascript_include_tag "js/jquery.accessibleList.js" %>
+  <%= javascript_include_tag "js/searchField.js" %>
+  <%= javascript_include_tag "js/common.js" %>
+  <%= javascript_include_tag "js/standard.js" %>
+  <%= javascript_include_tag "js/jquery.tip.js" %>
+  <%= javascript_include_tag "js/jquery.hashchange.js" %>
+  <%= javascript_include_tag "js/jquery.contextMenu.js" %>
+  <%= javascript_include_tag "js/list.js" %>
+  <%= javascript_include_tag "http://www.google.com/jsapi" %>
+
+	<script type="text/javascript">
+	
+		// Load the Visualization API and the piechart package.
+		google.load('visualization', '1', {'packages':['corechart']});
+		
+	</script>
+	
+	<!-- Example context menu -->
+	<script type="text/javascript">
+	
+		$(document).ready(function()
+		{
+			// Context menu for all favorites
+			$('.favorites li').bind('contextMenu', function(event, list)
+			{
+				var li = $(this);
+				
+				// Add links to the menu
+				if (li.prev().length > 0)
+				{
+					list.push({ text: 'Move up', link:'#', icon:'up' });
+				}
+				if (li.next().length > 0)
+				{
+					list.push({ text: 'Move down', link:'#', icon:'down' });
+				}
+				list.push(false);	// Separator
+				list.push({ text: 'Delete', link:'#', icon:'delete' });
+				list.push({ text: 'Edit', link:'#', icon:'edit' });
+			});
+			
+			// Extra options for the first one
+			$('.favorites li:first').bind('contextMenu', function(event, list)
+			{
+				list.push(false);	// Separator
+				list.push({ text: 'Settings', icon:'terminal', link:'#', subs:[
+					{ text: 'General settings', link: '#', icon: 'blog' },
+					{ text: 'System settings', link: '#', icon: 'server' },
+					{ text: 'Website settings', link: '#', icon: 'network' }
+				] });
+			});
+		});
+	
+	</script>	
+	<script type="text/javascript">
+		   function atualizaHora() {
+		        document.getElementById('div_hora').innerHTML = new Date();
+		   }
+
+		setTimeout("atualizaHora()",*1000*);
+
+	</script> 
+
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<header><div class="container_12">
+		
+		<p id="skin-name"><small>Sistema<br> SSImóveis</small> <strong>0.1</strong></p>
+		<div class="server-info">Data: <strong> <%= Date.today %></strong></div>
+		<div class="server-info">Hora: <strong> <%= Time.now.strftime("%I:%M") %>
+</strong></div>
+		
+	</div></header>
+
+
+	<!-- Main nav -->
+	<nav id="main-nav">
+		
+		<ul class="container_12">
+			<li class="home <%= 'current' if @current_action == 'dashboard' or @current_controller == 'simulacaos' %>"><a href="#" title="Home">Home</a>
+				<ul>
+					<li class="<%= 'current' if @current_controller == 'espacos' and @current_action == 'dashboard'%> "><a href="/" title="Dashboard">Dashboard</a></li>
+					
+					<li class="<%= 'current' if @current_controller == 'simulacaos' %>"><a href="#" title="Simulador">Simulador</a>
+						
+					</li>
+				</ul>
+			</li>
+			<li class="write <%= 'current' if @current_controller == 'usuarios' or 
+							  @current_controller == 'empresas' or
+							  @current_controller == 'clientes' or
+							  @current_controller == 'empreendimentos' or
+							  @current_controller == 'pavimentos' or 
+							  @current_controller == 'espacos' and @current_action != 'dashboard' %>"><a href="#" title="Cadastros">Cadastros</a>
+				<ul>
+					<li class="<%= 'current' if @current_controller == 'usuarios' %>"><a href="/usuarios" title="Usuarios">Usuários</a></li>
+					<% if @current_usuario %>
+					<% if @current_usuario.empresa_id == '1' %>
+					<li class="<%= 'current' if @current_controller == 'empresas' %>"><a href="/empresas" title="Empresas">Empresas</a></li>
+					<% end %>
+					<li class="<%= 'current' if @current_controller == 'clientes' %>"><a href="/clientes" title="Clientes">Clientes</a></li>
+					<li class="<%= 'current' if @current_controller == 'empreendimentos' %>"><a href="/empreendimentos" title="Empreendimentos">Empreendimentos</a></li>
+					<li class="<%= 'current' if @current_controller == 'pavimentos' %>"><a href="/pavimentos" title="Pavimentos">Pavimentos</a></li>
+					<li class="<%= 'current' if @current_controller == 'espacos' and @current_action != 'dashboard' %>"><a href="/espacos" title="Espacos">Espaços</a></li>
+				</ul>
+			</li>
+			
+			
+			<li class="stats"><a href="#" title="Stats">Stats</a></li>
+			
+		</ul>
+	</nav>
+	<!-- End main nav -->
+	
+	<!-- Sub nav -->
+	<div id="sub-nav"><div class="container_12">
+		
+		
+	
+	</div></div>
+	<!-- End sub nav -->
+	
+	<!-- Status bar -->
+	<div id="status-bar"><div class="container_12">
+	<div style="float:right">
+		<ul id="status-infos">
+			<li class="spaced">Olá <strong><%= @current_usuario.nome if @current_usuario %></strong> na empresa: 
+				<% unless current_usuario.empresa_id == "1" || current_usuario.empresa_id.nil? %>       
+	                   
+	                    <% if current_usuario.empresa_id %>
+	                        <%= Empresa.find_by_id(current_usuario.empresa_id).nome %>.
+	                    <% end %>
+	                <% else %> 
+	                   <div style="float:right; margin-left:5px;">
+	                    <form id="form" name="qualquer" class="form" 	action="/empresas/atualiza_empresa" method="post">
+	                        <select name="empresa_atual">
+	                    <% for empresa in Empresa.all %>
+	                        <option <%= 'selected' if !session[:empresa_atual].nil? and empresa.id == session[:empresa_atual].id %> value="<%= empresa.id %>"><%= empresa.nome %></option>
+	                    <% end %>
+	                   
+	                </select> 
+	              <input type="submit" value="Selecionar Empresa" class="button">
+	            </form>
+			 <% end %> 
+					<% end %>
+			</div>
+			</li>
+			<li><a href="logout" class="button red" title="Logout"><span class="smaller">LOGOUT</span></a></li>
+		</div>
+		</ul>
+		<ul id="breadcrumb">
+			<li><a href="#" title="Home">Home</a></li>
+			<li><a href="#" title="Dashboard">Dashboard</a></li>
+		</ul>
+	
+	</div></div>
+	<!-- End status bar -->
+	
+	<div id="header-shadow"></div>
+	<!-- End header -->
+	
+	<!-- Always visible control bar -->
+	<div id="control-bar" class="grey-bg clearfix"><div class="container_12">
+	
+		<!-- <div class="float-left">
+			<button type="button"><img src="images/icons/fugue/navigation-180.png" width="16" height="16"> Teste de Giriguidum</button>
+		</div>
+		
+		<div class="float-right"> 
+			<button type="button" disabled="disabled">Disabled</button>
+			<button type="button" class="red">Cancel</button> 
+			<button type="button" class="grey">Reset</button> 
+			<button type="button"><img src="images/icons/fugue/tick-circle.png" width="16" height="16"> Save</button>
+		</div> -->
+			
+	</div></div>
+	<!-- End control bar -->
+	
+	<!-- Content -->
+	<!-- <%= @current_controller %> -->
+<article class="container_12">
+	<%= yield %>
+</article>
+	<!-- End content -->
+	
+	<footer>
+		
+		<div class="float-left">
+			<a href="#" class="button">Help</a>
+			<a href="#" class="button">About</a>
+		</div>
+		
+		<div class="float-right">
+			<a href="#top" class="button"><img src="/images/icons/fugue/navigation-090.png" width="16" height="16"> Page top</a>
+		</div>
+		
+	</footer>
+
+<!--[if lt IE 8]></div><![endif]-->
+<!--[if lt IE 9]></div><![endif]-->
+</body>
+</html>
+
+

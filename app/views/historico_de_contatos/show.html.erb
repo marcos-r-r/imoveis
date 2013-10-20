@@ -1,0 +1,249 @@
+<p id="notice"><%= notice %></p>
+
+<section class="grid_12">
+  <div class="block-border">
+    <div class="block-content no-title">
+      <h1>Negociação</h1>
+
+      <div class="content-columns left30 no-title">
+
+        <!--<div class="content-columns-sep"></div>-->
+        <div class="content-left">
+          <div class="with-padding" style="height:500px; overflow: auto">
+
+            <div class="" style="float:left; margin-right:15px;">
+              <p>
+
+              <h3>Data:</h3>
+              <ul class="button">
+                <h3 class="big"><%= l(@historico_de_contato.updated_at.to_date, :format => "%d-%m-%Y") %></h3></ul>
+
+
+              <h3>Cliente:</h3>
+              <ul class="button">
+                <h3 class="big"><%= @historico_de_contato.cliente.nome if @historico_de_contato.cliente %></h3></ul>
+
+
+              <h3>Espaco:</h3>
+              <ul class="button"><h3 class="big"><%= @historico_de_contato.espaco.identificacao %></h3></ul>
+
+
+              <h3>Usuario:</h3>
+              <ul class="button"><h3 class="big"><%= @historico_de_contato.usuario.nome %></h3></ul>
+
+
+              <h3>Empreendimento:
+                <h3>
+                  <ul class="button">
+                    <h3 class="big"><%= @historico_de_contato.empreendimento.nome_do_empreendimento %></h3></ul>
+
+                  </p>
+
+                  <h3>Negociacao:</h3>
+
+                  <div class="block-content no-title" style="margin-bottom:10px;">
+                    <h5 style="color:#000000;"><%= @historico_de_contato.negociacao %></h5>
+                  </div>
+
+                  <% dias_negociacao = @historico_de_contato.updated_at.to_date + @historico_de_contato.espaco.empreendimento.dias_val_neg %>
+                  <% if dias_negociacao < Date.today
+                       color = 'red'
+                     else
+                       color = 'black'
+                     end %>
+                  <h5 style=<%= "color:" + color %>>Negociacao Válida
+                    até: <%= @historico_de_contato.updated_at.to_date + @historico_de_contato.espaco.empreendimento.dias_val_neg %></h5>
+            </div>
+
+          </div>
+        </div>
+
+
+        </ul>
+
+        <div class="field">
+
+
+          <div id="pegardados_simulador">
+
+          <% unless @historico_de_contato.simulacao.saldo.nil? %>
+            <% if @historico_de_contato.simulacao.parcelas_30 && @historico_de_contato.simulacao.parcelas_12.nil?  %>
+                <div class="block-border" style="float: left;">
+
+                  <h2>Simulação</h2>
+                  <table>
+                    <thead>
+                    <tr>
+
+                      <th>
+                        <div scope="col" class="block-border" style="margin-right: 2px; min-width: 50px">
+                          <b>Valor Total</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Entrada %</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Valor Entrada</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Saldo</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>CUB</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>30</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>36</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>48</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>48+</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>60</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>60+</b></div>
+                      </th>
+                    </tr>
+                    </thead>
+
+                    <tr class="block-content dark-bg no-title">
+                      <td> <%= @historico_de_contato.simulacao.valor_total.to_money('brl') %> </td>
+                      <td> <%= @historico_de_contato.simulacao.entrada %> </td>
+                      <td> <%= @historico_de_contato.simulacao.valor_entrada.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.saldo.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.cub %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_30.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_36.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_48.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_48_juros.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_60.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_60_juros.to_money("BRL") %> </td>
+                    </tr>
+                    <tr class="block-content dark-bg no-title">
+                      <% unless @historico_de_contato.simulacao.cub.nil? or @historico_de_contato.simulacao.cub == 0 %>
+                          <td> <%= (@historico_de_contato.simulacao.valor_total/@historico_de_contato.simulacao.cub).to_money(:brl) %> </td>
+                          <td></td>
+                          <td> <%= (@historico_de_contato.simulacao.valor_entrada/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.saldo/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td></td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_30/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_36/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_48/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_48_juros/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_60/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                          <td> <%= (@historico_de_contato.simulacao.parcelas_60_juros/@historico_de_contato.simulacao.cub).to_money("BRL") %> </td>
+                      <% end %>
+                    </tr>
+
+                  </table>
+
+                </div>
+            <% else %>
+                <div class="block-border" style="float: left;">
+
+                  <h2>Simulação</h2>
+                  <table>
+                    <thead>
+                    <tr>
+
+                      <th>
+                        <div scope="col" class="block-border" style="margin-right: 2px; min-width: 50px">
+                          <b>Valor Total</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Entrada %</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Valor Entrada</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Saldo</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>CUB</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>12</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>24</b></div>
+                      </th>
+                      <th>
+                        <div class="block-border" style="margin-right: 2px; min-width: 50px"><b>50</b></div>
+                      </th>
+                    </tr>
+                    </thead>
+
+                    <tr class="block-content dark-bg no-title">
+                      <td> <%= @historico_de_contato.simulacao.valor_total.to_money('brl') %> </td>
+                      <td> <%= @historico_de_contato.simulacao.entrada %> </td>
+                      <td> <%= @historico_de_contato.simulacao.valor_entrada.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.saldo.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.cub %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_12.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_24.to_money("BRL") %> </td>
+                      <td> <%= @historico_de_contato.simulacao.parcelas_50.to_money("BRL") %> </td>
+                    </tr>
+
+                  </table>
+
+                </div>
+              <% end %>
+            <% end -%>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= form_tag ({:controller => "historico_de_contatos", :action => "alterar_status", :id => @historico_de_contato.id}) do %>
+        <% @current_usuario.tipo == 'Vendedor' ? @disabled = true : @disabled = false %>
+        <% if @historico_de_contato.espaco.status > 2 %>
+            <h3>Avaliação:</h3>
+
+            <div class="block-content no-title">
+              <h5 style="color:#000000"><%= text_area_tag :avaliacao, @historico_de_contato.try(:avaliacao), {size: "100x10", disabled: @disabled} %></h5>
+            </div>
+            <%= select nil, :status, options_for_select([["Aguardando Avaliação", "3"], ["Negociação aprovada", "4"], ["Negociação negada", "5"]], @historico_de_contato.espaco.status), {}, {disabled: @disabled} %>
+            <%= submit_tag 'Avaliar', {disabled: @disabled} %>
+        <% end -%>
+    <% end -%>
+    <br>
+    <br>
+  </div>
+
+
+  <div class="block-footer" style="min-height:30px;">
+
+    <div class="float-left">
+      <% unless @historico_de_contato.status == 2 %>
+
+          <%= link_to 'Tornar Disponível', {:controller => "historico_de_contatos", :action => "alterar_status", :status => '0', :id => @historico_de_contato.id}, :class => "button" %>
+              |
+          <% if @historico_de_contato.espaco.status == 1 %>
+              <%= link_to 'Tornar Disponível', {:controller => "historico_de_contatos", :action => "alterar_status", :status => '0', :id => @historico_de_contato.id}, :class => "button" %>
+              |
+              <%= link_to 'Liberar para Avaliação', {:controller => "historico_de_contatos", :action => "alterar_status", :status => '3', :id => @historico_de_contato.id}, :class => "button" %>
+          <% end -%>
+          <% if @historico_de_contato.espaco.status == 4 %>
+              <%= link_to 'Concluir Venda', {:controller => "historico_de_contatos", :action => "alterar_status", :status => '2', :id => @historico_de_contato.id}, :class => "button red" %>
+          <% end -%>
+      <% end %>
+      <%= link_to 'Exportar', {:controller => "historico_de_contatos", :action => "export_selected", :id => @historico_de_contato.id}, :class => "button red" %>
+    </div>
+    <div class="float-right">
+
+      <%= link_to 'Voltar', "/", :class => "button" %>
+
+    </div>
+  </div>
+
+  </div>
+  </div></div>
+</section>

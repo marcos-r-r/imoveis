@@ -1,0 +1,13 @@
+<% if @cliente.errors.any? %>
+    <div id="error_explanation">
+      <h2>Cliente não salvo pelos seguintes motivos:</h2>
+		<div class="box" style="max-width: 400px">
+		<% @cliente.errors.each do |attribute, message| -%>
+        	<% if message.is_a?(String)%>
+        	    <li><h3><%= message %></h3></li>
+    	    <% end %>
+	    <% end -%>	
+     
+      	</div>
+    </div>
+  <% end %>

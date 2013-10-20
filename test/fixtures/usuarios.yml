@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  empresa_id: MyString
+  nome: MyString
+  login: MyString
+  senha: MyString
+  tipo: MyString
+  permissao: 
+
+two:
+  empresa_id: MyString
+  nome: MyString
+  login: MyString
+  senha: MyString
+  tipo: MyString
+  permissao: 

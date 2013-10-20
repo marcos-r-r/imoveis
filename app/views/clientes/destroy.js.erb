@@ -1,0 +1,4 @@
+$('#cliente_<%= @cliente.id %>').fadeOut();
+
+$('#contador').empty();
+$('#contador').append('<%= escape_javascript(render 'contador') %>');

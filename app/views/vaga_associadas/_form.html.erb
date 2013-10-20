@@ -1,0 +1,33 @@
+<%= form_for(@vaga_associada) do |f| %>
+  <% if @vaga_associada.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vaga_associada.errors.count, "error") %> prohibited this vaga_associada from being saved:</h2>
+
+      <ul>
+      <% @vaga_associada.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :identificacao %><br />
+    <%= f.text_field :identificacao %>
+  </div>
+  <div class="field">
+    <%= f.label :espaco_id %><br />
+    <%= f.text_field :espaco_id %>
+  </div>
+  <div class="field">
+    <%= f.label :id_unidade_negociada %><br />
+    <%= f.text_field :id_unidade_negociada %>
+  </div>
+  <div class="field">
+    <%= f.label :historico_de_contato_id %><br />
+    <%= f.text_field :historico_de_contato_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

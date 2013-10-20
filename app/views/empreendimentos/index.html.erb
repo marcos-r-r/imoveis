@@ -1,0 +1,59 @@
+<h1>Lista de empreendimentos</h1>
+
+<!--%= render 'form' %> -->
+<% if @empresas.empty? %>
+	<div class="box">
+		<h3>NENHUMA EMPRESA CADASTRADA</h3>
+	</div>
+<% else %>
+<table class="table" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<!-- This is a special cell for loading statuses - see below for more -->
+			<th scope="col" style="width: 20px;">ID</th>
+			<th scope="col">Código</th>
+			<th scope="col">Nome</th>
+			<th scope="col">CUB</th>
+			<th scope="col">Ativo</th>
+			<th scope="col" class="table-actions">Ações</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="6"><img src="images/icons/fugue/arrow-curve-000-left.png" width="16" height="16" class="picto"><b>Total:</b> <%= @empreendimentos_da_empresa.size %> cadastros encontrados</td>
+			<!-- ><td><a href="#" class="button"><img src="images/icons/fugue/cross-circle.png" width="16" height="16"> delete all</a></td> -->
+		</tr>
+	</tfoot>
+	<tbody>
+		<% @empreendimentos_da_empresa.each do |empreendimento| %>
+		<tr>
+			<!-- ><th scope="row" class="table-check-cell"><input type="checkbox" name="selected[]" id="table-selected-1" value="1"></th> -->
+			<td><%= empreendimento.id %></td>
+			<td>
+			<ul class="keywords">
+				<li>
+					<%= empreendimento.codigo %>
+				</li>
+			</ul></td>
+			<td><%= empreendimento.nome_do_empreendimento %></td>
+			<td><%= empreendimento.cub %></td>
+			<td><%= check_box_tag empreendimento, empreendimento.ativo, empreendimento.ativo, :disabled => true %></td>
+			
+			<!-- The class table-actions is designed for action icons -->
+			<td class="table-actions"> <!-- <%= link_to image_tag("/images/icons/fugue/application-blog.png"), empreendimento, :class => "with-tip", :title =>"Visualizar" %> -->
+			<%= link_to image_tag("/images/icons/fugue/pencil.png"), edit_empreendimento_path(empreendimento), :title =>"Editar", :class => "with-tip" %>
+			<%= link_to image_tag("/images/icons/fugue/cross-circle.png"), empreendimento, confirm: 'Tem certeza que deseja apagar o empreendimento ' + empreendimento.nome_do_empreendimento + '? Isso irá apagar todos os pavimentos e espaços relacionados' , method: :delete, :title =>"Delete", :class => "with-tip" %> </td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br />
+
+
+
+
+
+
+<%= link_to 'Novo Empreendimento', new_empreendimento_path, :class => "button" %>
+<% end %>

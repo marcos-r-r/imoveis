@@ -1,0 +1,56 @@
+<%= form_for @usuario, :html=>{:class=>"form"} do |f| %> 
+  <% if @usuario.errors.any? %>
+    <div id="error_explanation">
+      <h2 style="color: red">Preencha todos os campos</h2>
+    </div>
+  <% end %>
+  
+	<% unless @current_usuario.nil?%>
+ 	<% if @current_usuario.empresa_id == "1" %>
+ 	<div class="field">
+ 		<% unless session[:empresa_atual].nil?%>
+ 	<%= hidden_field(:usuario, :empresa_id, {:value=> session[:empresa_atual].id}) %><br />
+    <% end %>
+  </div>
+	<%else%>
+	<div class="field">
+ 	<% unless @current_usuario.empresa_id.nil? %>
+ 	<%= hidden_field(:usuario, :empresa_id, {:value=> Empresa.find(@current_usuario.empresa_id).id})%><br />
+ 	<% else %>
+ 	<!-- <%= collection_select(:usuario, :empresa_id, Empresa.find(:all), :id, :nome) %> -->
+ 	
+    <% end %>
+  </div>
+	<% end %>
+	<% end %>
+ 
+ <div class="field">
+	<% if @current_usuario.nil? %>
+ 	<%= f.hidden_field :empresa_id, :value=> "1"%>
+	<%= f.hidden_field :tipo, :value => "Master" %>
+	<% else %>
+    <%= f.select :tipo, ["Vendedor", "Administrador"], :prompt => "Selecione um Tipo" %><br />
+    <% end %>
+  </div>
+  <div style="min-height: 20px;"></div>
+  <div class="field">
+    <%= f.text_field :nome %>
+  	<%= f.label :nome %><br />
+  </div>
+  <div class="field">
+    <%= f.text_field :username %>
+    <%= f.label "Email" %><br />
+  </div>
+  <div class="field">
+    <%= f.password_field :password %>
+    <%= f.label "Senha" %><br />
+  </div>
+  <div class="field">
+    <%= f.password_field :password_confirmation %>
+    <%= f.label "Confirmação de Senha" %><br />
+  </div>
+  <div class="actions">
+    <%= f.submit "Salvar", :class => "button red"%>
+  </div>
+<% end %>
+<div style="min-height: 15px;"></div>

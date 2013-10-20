@@ -1,0 +1,25 @@
+<%= form_for(@empresa, :html => {:multipart => true, :class=>"form"}) do |f| %>
+<% if @empresa.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@empresa.errors.count, "error") %> prohibited this empresa from being saved:</h2>
+	<ul>
+		<% @empresa.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+<div class="actions">
+	<%= f.text_field :nome %>
+	<%= f.label :nome %><br />
+</div>
+<div class="field">
+	<%= f.file_field :empresa_logomarca %>
+	<%= f.label :logomarca %><br />
+</div>
+<%= f.submit "Salvar", :class=>"button red"%>
+</div>
+<div style="min-height: 15px;"></div>
+<% end %> 

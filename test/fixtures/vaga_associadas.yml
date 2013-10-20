@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  identificacao: MyString
+  espaco_id: MyString
+  id_unidade_negociada: MyString
+
+two:
+  identificacao: MyString
+  espaco_id: MyString
+  id_unidade_negociada: MyString

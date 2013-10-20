@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Identificacao:</b>
+  <%= @vaga_associada.identificacao %>
+</p>
+
+<p>
+  <b>Espaco:</b>
+  <%= @vaga_associada.espaco_id %>
+</p>
+
+<p>
+  <b>Id unidade negociada:</b>
+  <%= @vaga_associada.id_unidade_negociada %>
+</p>
+
+<p>
+  <b>Historico de contato:</b>
+  <%= @vaga_associada.historico_de_contato_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_vaga_associada_path(@vaga_associada) %> |
+<%= link_to 'Back', vaga_associadas_path %>

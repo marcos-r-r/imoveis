@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Valor total:</b>
+  <%= @simulacao.valor_total %>
+</p>
+
+<p>
+  <b>Entrada:</b>
+  <%= @simulacao.entrada %>
+</p>
+
+<p>
+  <b>Valor entrada:</b>
+  <%= @simulacao.valor_entrada %>
+</p>
+
+<p>
+  <b>Saldo:</b>
+  <%= @simulacao.saldo %>
+</p>
+
+<p>
+  <b>Cub:</b>
+  <%= @simulacao.cub %>
+</p>
+<p>
+  <b>historico:</b>
+  <%= @simulacao.historico_de_contato_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_simulacao_path(@simulacao) %> |
+<%= link_to 'Back', simulacaos_path %>

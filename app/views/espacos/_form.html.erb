@@ -1,0 +1,100 @@
+<%= javascript_include_tag 'jquery' %>
+<%= javascript_include_tag 'autofill' %>
+<%= form_for @espaco, :html => {:class => "form"} do |f| %>
+    <% if @espaco.errors.any? %>
+        <div id="error_explanation">
+          <h2>O espaço não salvo pelos seguintes motivos:</h2>
+
+          <div class="box" style="max-width: 400px">
+            <% @espaco.errors.each do |attribute, message| -%>
+                <% if message.is_a?(String) %>
+                    <li><h3><%= message %></h3></li>
+                <% end %>
+            <% end -%>
+
+          </div>
+        </div>
+    <% end %>
+    <div class="block-border">
+      <div class="field">
+
+        <%= f.hidden_field :empreendimento_id, :value => @empreendimento_escolhido.id %>
+      </div>
+      <div class="field">
+        <%= collection_select(:espaco, :pavimento_id, Pavimento.find_all_by_empreendimento_id(@empreendimento_escolhido), :id, :andar) %>
+        <%= f.label :pavimento_id %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.select :tipo_de_espaco, ["Sala", "Garagem"] %>
+        <%= f.label "Tipo de Espaço" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :identificacao %>
+        <%= f.label "Identificação" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :area_privativa %>
+        <%= f.label "Área privativa" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :area_comum %>
+        <%= f.label "Área comum" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :numero_garagem %>
+        <%= f.label "Nº da garagem" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :area_garagem %>
+        <%= f.label "Área de garagem" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :area_total %>
+        <%= f.label "Área total" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :valor_m2 %>
+        <%= f.label "Valor M²" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.text_field :valor_total %>
+        <%= f.label :valor_total %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.select :localizacao, ["", "Frente", "Fundos"] %>
+        <%= f.label "Localização" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.select :pega_sol, ["", "Manhã", "Tarde"] %>
+        <%= f.label :pega_sol %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.select :vaga_dupla, ["", "Sim", "Não"] %>
+        <%= f.label "Vaga Dupla" %>
+        <br/>
+      </div>
+      <div class="field">
+        <%= f.file_field :planta %> <br>
+        <%= f.label :planta %>
+        <br/>
+      </div>
+      <div class="actions">
+        <%= f.submit "Salvar", :class => "button red" %>
+      </div>
+
+<% end %>
+</div><br>
+
+

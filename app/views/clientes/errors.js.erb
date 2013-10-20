@@ -1,0 +1,4 @@
+$('#error').empty();
+$('#error').append("<%= escape_javascript(render(:partial => "errors"))%>");
+$('#error').slideToggle(700).delay(5000).slideToggle(700);
+

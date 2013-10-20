@@ -1,0 +1,33 @@
+
+<table class="table" id="clientes" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+
+			<!-- This is a special cell for loading statuses - see below for more -->
+			<th scope="col" style="width: 10px;"><a href="#" style="color: white;">ID</a></th>
+			<th scope="col"><a href="#" style="color: white;">Tipo</a></th>
+			<th scope="col"><a href="#" style="color: white;">Nome</a></th>
+			<th scope="col"><a href="#" style="color: white;">Endereço</a></th>
+			<th scope="col"><a href="#" style="color: white;">Telefone</a></th>
+			<th scope="col"><a href="#" style="color: white;">Nome Contato</a></th>
+			<th scope="col" class="table-actions">Ações</th>
+
+		</tr>
+	</thead>
+	<tfoot>
+		<tr id="contador">
+			<%= render 'contador' %>
+			<!-- ><td><a href="#" class="button"><img src="images/icons/fugue/cross-circle.png" width="16" height="16"> delete all</a></td> -->
+		</tr>
+	</tfoot>
+	<tbody>
+		<% @clientes_da_empresa.each do |cliente| %>
+		<%= render 'lista', :cliente => cliente %>
+		<% end %>
+	</tbody>
+</table>
+
+
+
+
+<%= link_to 'Novo Cliente', new_cliente_path, :class=>"button", :remote => true %>

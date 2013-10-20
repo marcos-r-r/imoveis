@@ -1,0 +1,41 @@
+<body class="special-page login-bg dark">	
+	<section id="login-block">
+		<div class="block-border"><div class="block-content">
+
+			<h1>Autenticação</h1>
+			<div class="block-header">Acesso Restrito</div>
+
+			
+			
+			  <% if @usuario_session.errors.any? %>
+			    
+			    <p class="message info no-margin" style="color: red">Nome de Usuário ou Senha incorreto</p>
+			    <!--<p>
+			    <div id="error_explanation">
+			      <h3 style="color: red">Nome de Usuário ou Senha incorretos</h3>
+			    </div>
+			    </p>-->
+			  <% else %>  
+			    
+			  	<p class="message info no-margin">Faça o Login para acessar o sistema</p>
+			  
+			  <% end %>
+
+			<%= form_for(@usuario_session, :html => {:class => 'form with-margin', :name => 'login-form', :id => 'login-form'}) do |f| %>
+				<input type="hidden" name="a" id="a" value="send">
+				<p class="inline-small-label">
+					<label for="login"><span class="big">Usuário</span></label>
+					<%= f.email_field :username, :id => "login", :class => "full-width" %>
+				</p>
+
+				<p class="inline-small-label">
+					<label for="pass"><span class="big">Senha</span></label>
+					<%= f.password_field :password, :id => 'pass', :class => 'full-width' %>
+				</p>
+
+				<button type="submit" class="float-right">Entrar</button>
+				
+			<% end %>
+		</div></div>
+	</section>
+</body>	

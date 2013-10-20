@@ -1,0 +1,48 @@
+<%= javascript_include_tag 'jquery' %>
+<%= javascript_include_tag 'autofill' %>
+
+<p>
+	<table>
+	<h1>Simulação</h1>
+  	<tr>
+    
+    <th>Valor Total</th>
+    <th>Entrada %</th>
+    <th>Valor <br>Entrada</th>
+    <th>Saldo</th>
+    <th>CUB</th>
+    <th>30</th>
+    <th>36</th>
+    <th>48</th>
+    <th>48+</th>
+    <th>60</th>
+    <th>60+</th>
+<tr>
+  <td> <%= text_field_tag "historico_de_contato_simulacao_attributes_valor_total",nil, :size => 5, :class =>"simulador_field" %> </td>
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_entrada",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_valor_entrada",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_saldo",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_cub",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_30",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_36",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_48",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_48_juros",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_60",nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "historico_de_contato_simulacao_attributes_parcelas_60_juros",nil,:size => 5, :class =>"simulador_field" %> </td>
+</tr> 
+<tr>
+	<td> <%= text_field_tag "valor_total_cub", nil, :size => 5, :class =>"simulador_field" %> </td>
+	<td></td> 
+	<td> <%= text_field_tag "valor_entrada_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "saldo_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> </td> 
+	<td> <%= text_field_tag "parcelas_30_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_36_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_48_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_48_juros_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_60_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_60_juros_cub", nil,:size => 5, :class =>"simulador_field" %> </td>
+</tr>
+</table>
+
+</p>

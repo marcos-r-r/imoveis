@@ -1,0 +1,2 @@
+$('#conteudo-cliente').hide(300).delay(1000).queue(function(){$(this).empty();}).dequeue().delay(700).queue(function(){$(this).append("<%= escape_javascript(render 'show') %>");}).dequeue().delay(700).show(700);
+

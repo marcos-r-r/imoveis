@@ -1,0 +1,5 @@
+$("#cliente_<%= @cliente.id %>").replaceWith("<%= escape_javascript(render 'lista', :cliente => @cliente) %>");
+<% @cliente = Cliente.new %>
+$(".simple_form").replaceWith("<%= escape_javascript(render(:partial => "form"))%>")
+$('#form1').slideToggle(400);
+$('#form1').empty();

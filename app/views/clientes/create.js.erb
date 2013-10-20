@@ -1,0 +1,4 @@
+$('#clientes').append('<%= escape_javascript (render 'lista', :cliente => @cliente) %>');
+$("#form1").slideToggle(700);
+$('#contador').empty();
+$('#contador').append('<%= escape_javascript(render 'contador') %>');

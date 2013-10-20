@@ -1,0 +1,37 @@
+<%= form_for(@simulacao) do |f| %>
+  <% if @simulacao.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@simulacao.errors.count, "error") %> prohibited this simulacao from being saved:</h2>
+
+      <ul>
+      <% @simulacao.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valor_total %><br />
+    <%= f.text_field :valor_total %>
+  </div>
+  <div class="field">
+    <%= f.label :entrada %><br />
+    <%= f.text_field :entrada %>
+  </div>
+  <div class="field">
+    <%= f.label :valor_entrada %><br />
+    <%= f.text_field :valor_entrada %>
+  </div>
+  <div class="field">
+    <%= f.label :saldo %><br />
+    <%= f.text_field :saldo %>
+  </div>
+  <div class="field">
+    <%= f.label :cub %><br />
+    <%= f.text_field :cub %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

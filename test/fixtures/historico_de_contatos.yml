@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  data: 2011-10-14
+  cliente_id: MyString
+  espaco_id: MyString
+  id_vendedor: MyString
+  empresa_id: MyString
+  empreendimento_id: MyString
+  negociacao: MyString
+  simulacao: 
+  vagas: 
+
+two:
+  data: 2011-10-14
+  cliente_id: MyString
+  espaco_id: MyString
+  id_vendedor: MyString
+  empresa_id: MyString
+  empreendimento_id: MyString
+  negociacao: MyString
+  simulacao: 
+  vagas: 

@@ -1,0 +1,55 @@
+<%= form_for @cliente, :remote => true, :html=>{:class=>"form"} do |f| %>
+  
+
+  <div class="field">
+    <% unless @current_usuario.empresa_id != "1" %>
+		
+   			<%= hidden_field(:cliente, :empresa_id, {:value => session[:empresa_atual].id}) %>
+		
+	<% else %>
+
+	<%= hidden_field(:cliente, :empresa_id, :value => @current_usuario.empresa_id) %>
+	
+	<% end %>
+	<%= hidden_field(:cliente, :usuario_id, :value => @current_usuario.id) %>
+  </div>
+  <div id="" class="block-border" style="max-width: 800px;">
+  <span style="float: left">
+  <div class="field">
+    <%= f.select :tipo, ["Fisica", "Juridica"], :prompt => "Selecione um Tipo" %><br />
+   <%= f.label "Tipo de Pessoa"%><br />
+  </div>
+  <div class="field">
+    <%= f.text_field :nome %>
+    <%= f.label :nome %><br />
+  </div></span>
+   <span style="float: left; margin-left: 15px;">
+  <div class="field">
+    <%= f.text_field :cpf_cnpj, {:id => 'cpf-field',  :maxlength => "12"} %>
+    <%= f.label "CPF/CNPJ - somente numeros" %><br />
+  </div>
+  <div class="field">
+    <%= f.text_field :endereco %>
+    <%= f.label "Endereço" %><br />
+  </div>
+   </span>
+   <span style="float: left; margin-left: 15px;">
+  <div class="field">
+    <%= f.text_field :ddd, {:size=>"5px", :maxlength => "2" } %>
+    <%= f.text_field :telefone, {:size=>"24px",  :maxlength => "8"} %>
+    <%= f.label "Telefone" %><br />
+  </div>
+  <div class="field">
+    <%= f.text_field :nome_contato %>
+    <%= f.label "Nome para Contato" %><br />
+  </div>
+  </span>
+  <div id="" class="clear">
+    
+  </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "Salvar", :class=>"button red"%>
+  </div>
+  <div style="min-height: 15px;"></div>
+<% end %>

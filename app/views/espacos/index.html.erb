@@ -1,0 +1,108 @@
+<script type="text/javascript">
+	$(document).load(function(){
+	$('#list').accessibleList( pageSize = 3);
+});
+	</script>
+
+<h1>Lista de Espaços</h1>
+
+<% if @empreendimentos.empty? %>
+	<div class="box">
+	<h1 style="text-align: center"> NENHUM EMPREENDIMENTO CADASTRADO PARA ESSA EMPRESA. </h1>
+	</div>
+<% else %>
+<%= form_tag({:controller => "espacos", :action => "popula_pavimento_por_empreendimento"}, :class=>"form", :method => "post") do %>
+
+<% @empreendimento = @empreendimento_escolhido.id unless @empreendimento_escolhido.nil? %>
+
+<div style = "float: left; margin-right: 15px;">
+	<span>Empreendimento</span>
+	<td><%= collection_select(nil, :empreendimento_id, @empreendimentos, :id, :nome_do_empreendimento, {:selected => @empreendimento}, {:onchange => "this.form.submit()"})%> <!-- <%= submit_tag("Selecione o Empreendimento") %> -->
+	<% end %>
+</div>
+
+<% if @pavimentos.empty? %>
+	<div class="clear" style="min-height: 10px"></div>
+	<div class="box">
+	<p><h1 style="text-align: center"> NENHUM PAVIMENTO CADASTRADO PARA ESSE EMPREENDIMENTO </h1></p>
+	</div>
+	<% else %>
+<div>
+	<%= form_tag({:controller => "espacos", :action => "popula_lista_por_pavimento"}, :class=>"form", :method => "post") do %> <span>Pavimento</span>
+	<%= collection_select(nil, :pavimento_id, @pavimentos, :id, :andar, {:selected => @pavimento}, {:onchange => "this.form.submit()"})%></td> <!-- <%= submit_tag("Selecione o Pavimento") %> -->
+	<% end %>
+	
+	
+</div>
+<div style="min-height: 15px;"></div>
+<!-- Add the class 'table' -->
+<table class="table" cellspacing="0" width="100%">
+	<thead>
+		<tr>
+			<!-- This is a special cell for loading statuses - see below for more -->
+			<th scope="col">ID</th>
+			<th scope="col">Tipo de Sala</th>
+			<th scope="col">Numero</th>
+			<th scope="col">Area M²</th>
+			<th scope="col">Valor M²</th>
+			<th scope="col">Valor Total</th>
+			<th scope="col">Pega Sol</th>
+			<th scope="col">Localização</th>
+			<th scope="col">Planta</th>
+			<th scope="col" class="table-actions">Ações</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="10"><img src="images/icons/fugue/arrow-curve-000-left.png" width="16" height="16" class="picto"><b>Total:</b> <%= @espacos_do_pavimento.size %> cadastros encontrados</td>
+			<!-- ><td><a href="#" class="button"><img src="images/icons/fugue/cross-circle.png" width="16" height="16"> delete all</a></td> -->
+		</tr>
+	</tfoot>
+	<tbody id="list">
+		<% @espacos_do_pavimento.each do |espaco| %>
+		
+			<% case espaco.status %>
+  	<% when 1 %>
+  	<% @acao = "show" %>
+  	<% @label = "orange" %>
+  <tr bgcolor="#95c1a2">
+  	<% when 2 %>
+  	<% @acao = "show" %>
+  	<% @label = "purple" %>
+  <tr bgcolor="#d82247">
+  	<% when 0, nil %>
+  	<% @acao = "new" %>
+  	<% @label = "green" %>
+  <tr bgcolor="#FFF">
+  	<% end %> 
+			<!-- ><th scope="row" class="table-check-cell"><input type="checkbox" name="selected[]" id="table-selected-1" value="1"></th> -->
+			<td><%= espaco.id %></td>
+			<td>
+			<ul class="keywords">
+				<li class="<%= @label %>-keyword">
+					<%= espaco.tipo_de_espaco %>
+				</li>
+			</ul></td>
+			<td><%= espaco.identificacao %></td>
+			<td><%= espaco.area_total %></td>
+			<td><%= number_to_currency(espaco.valor_m2, :unit=> 'R$', :separator => ",", :delimiter => ".") %></td>
+			<td><%= number_to_currency(espaco.valor_total, :unit=> 'R$', :separator => ",", :delimiter => ".") %></td>
+			<td><%= espaco.pega_sol %></td>
+			<td><%= espaco.localizacao %></td>
+			<td>
+			<%  if espaco.planta %>
+			<a href="<%= espaco.planta.url %>" target="_blank"><small><img src="images/icons/fugue/image.png" width="16" height="16" class="picto"> <%= espaco.planta.format %> | <%= espaco.planta.size %> Bytes</small></a>
+			<% end %>
+			</td>
+			<!-- The class table-actions is designed for action icons -->
+			<td class="table-actions"><!-- <%= link_to image_tag("/images/icons/fugue/application-blog.png"), espaco, :class => "with-tip", :title =>"Visualizar" %> -->
+			<%= link_to image_tag("/images/icons/fugue/pencil.png"), edit_espaco_path(espaco), :title =>"Editar", :class => "with-tip" %>
+			<%= link_to image_tag("/images/icons/fugue/cross-circle.png"), espaco, confirm: 'Tem certeza que deseja apagar o espaço ' + espaco.identificacao + '?' , method: :delete, :title =>"Delete", :class => "with-tip" %> </td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<br />
+<%= link_to 'Criar Novo Espaço', new_espaco_path, :class => "button" %>
+<% end %> 
+<% end %> 

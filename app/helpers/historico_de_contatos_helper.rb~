@@ -1,0 +1,10 @@
+module HistoricoDeContatosHelper
+
+	def adiciona_vaga
+	
+	@vaga << params[:espaco_id]
+	puts @vaga
+	
+	end
+
+end

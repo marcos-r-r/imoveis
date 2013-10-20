@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  empreendimento_id: MyString
+  pavimento_id: MyString
+  tipo_de_espaco: MyString
+  identificacao: MyString
+  area: 
+  valor_m2: 
+  valor_total: 
+  pega_sol: MyString
+  localizacao: MyString
+  planta: MyString
+  status: 1
+
+two:
+  empreendimento_id: MyString
+  pavimento_id: MyString
+  tipo_de_espaco: MyString
+  identificacao: MyString
+  area: 
+  valor_m2: 
+  valor_total: 
+  pega_sol: MyString
+  localizacao: MyString
+  planta: MyString
+  status: 1

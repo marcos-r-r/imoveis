@@ -1,0 +1,7 @@
+class Espaco < ActiveRecord::Base
+  
+  image_accessor :planta
+	belongs_to :empreendimento  
+	has_one :historico_de_contato
+
+end

@@ -1,0 +1,6 @@
+<h1>Editing historico_de_contato</h1>
+
+<%= render 'form' %>
+
+
+<%= link_to 'Back', :controller =>"historico_de_contatos", :action => "desfaz", :espaco => :espaco_id %>

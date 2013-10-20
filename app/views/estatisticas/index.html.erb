@@ -1,0 +1,52 @@
+<%= javascript_include_tag :highcharts %> 
+<%= javascript_include_tag "jquery-ui-timepicker-addon" %>
+
+
+
+
+<div class="align-center" >
+  
+
+
+ <h3>Selecione o Usuario</h3>
+ <% @usuario_escolhido = @usuario.id unless @usuario.nil? %>
+
+	<%= form_tag({:controller => "estatisticas", :action=> "escolhe_usuario"}, :method => "post") do |f| %>
+	          <%= collection_select(nil , :id, @usuarios, :id, :nome, {:selected => @usuario_escolhido}) %>
+	           <%= submit_tag "Selecionar Usuario" %> 
+	          <% end %>
+	          
+	
+	<h3>Selecione a Data</h3>
+	<%= form_tag({:controller => "estatisticas", :action=> "escolhe_datas"}, :method => "post") do |f| %>
+		
+		<span style="margin-right: 15px;">
+	
+		<span> Inicial</span>
+		<!--<input type="text" name="data_inicial" id="data_inicial" value="" class="hasDatepicker"> -->
+	          <%= text_field_tag(:data_inicial, (@data_inicial.to_date.strftime("%d.%m.%Y") unless @data_inicial.nil?)) %> 
+	    
+	    </span>
+	          
+	    <span>
+			<span> Final</span>
+		<!-- <input type="text" name="data_final" id="data_final" value="" class="hasDatepicker"> -->
+          <%= text_field_tag(:data_final, (@data_final.to_date.strftime("%d.%m.%Y") unless @data_final.nil?)) %> 
+          
+          </span>
+          
+	          <%= submit_tag "Enviar" %> 
+	          <% end %>
+	
+ <% unless @usuario.nil? %>
+<div style="min-height: 20px;"></div>
+<div class="align-center with-padding" style="margin-left: 20px;">
+<div style="float: left; margin-right: 15px;">
+	<%= high_chart("Negociacao", @h) %>
+</div>
+<div style="float: left;">
+	<%= high_chart("Cliente", @c) %>
+</div>
+</div>
+<% end %> 
+</div>

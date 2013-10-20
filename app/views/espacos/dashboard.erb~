@@ -1,0 +1,69 @@
+<h1>Dashboard</h1>
+ 
+<%= form_tag({:controller => "espacos", :action => "popula_pavimento_por_empreendimento"}, :method => "post") do %>
+<% if @empreendimento_escolhido.nil? %>
+<% @empreendimento = nil %>
+<% else %>
+<% @empreendimento = @empreendimento_escolhido.id %>
+<% end %>
+<td></br><%= collection_select(nil, :empreendimento_id, Empreendimento.find_all_by_empresa_id(session[:empresa_atual]), :id, :nome_do_empreendimento, {:selected => @empreendimento}, {:onchange => "this.form.submit()"})%></td>
+<%= submit_tag("Selecione o Empreendimento") %>
+<% end %>
+<%= form_tag({:controller => "espacos", :action => "popula_lista_por_pavimento"}, :method => "post") do %>
+<% if @pavimento_escolhido.nil? %>
+<% @pavimento = nil %>
+<% else %>
+<% @pavimento = @pavimento_escolhido.id %>
+<% end %>
+<td></br><%= collection_select(nil, :pavimento_id, Pavimento.find_all_by_empreendimento_id(@empreendimento), :id, :andar, {:selected => @pavimento}, {:onchange => "this.form.submit()"})%></td>
+<%= submit_tag("Selecione o Pavimento") %>
+<% end %>
+
+
+
+<table>
+  <tr>
+    
+    <th>Tipo de espaco</th>
+    <th>Identificacao</th>
+    <th>Area</th>
+    <th>Valor m2</th>
+    <th>Valor total</th>
+    <th>Planta</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @espacos_do_pavimento.each do |espaco| %>
+  	<% case espaco.status %>
+  	<% when 1 %>
+  	<% @acao = "show" %>
+  	<% @label = "Visualizar" %>
+  <tr bgcolor="#95c1a2">
+  	<% when 2 %>
+  <tr bgcolor="#d82247">
+  	<% @acao = "show" %>
+  	<% @label = "Visualizar" %>
+  	<% when 0, nil %>
+  <tr bgcolor="#FFF">
+  	<% @acao = "new" %>
+  	<% @label = "Novo" %>
+  	<% end %>
+    
+    <td><%= espaco.tipo_de_espaco %></td>
+    <td><%= espaco.identificacao %></td>
+    <td><%= espaco.area %></td>
+    <td><%= espaco.valor_m2 %></td>
+    <td><%= espaco.valor_total %></td>
+    <td><%= link_to 'planta', espaco.planta.url %></td>
+    <td><%= link_to @label, :controller =>"historico_de_contatos", :action => @acao, :espaco => espaco.id %></td>
+    
+   
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

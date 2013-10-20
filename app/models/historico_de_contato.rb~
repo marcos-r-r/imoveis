@@ -1,0 +1,5 @@
+class HistoricoDeContato < ActiveRecord::Base
+
+	belongs_to :simulacao
+	accepts_nested_attributes_for :simulacao
+end

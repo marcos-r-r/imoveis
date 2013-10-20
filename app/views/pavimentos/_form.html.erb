@@ -1,0 +1,34 @@
+<%= form_for @pavimento,:html=>{:class => "form"} do |f| %>
+  <% if @pavimento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pavimento.errors.count, "error") %> prohibited this pavimento from being saved:</h2>
+
+      <ul>
+      <% @pavimento.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="block-border">
+  <div class="field">
+  	 <% @empreendimento_escolhido = session[:empreendimento_escolhido] unless session[:empreendimento_escolhido].nil?%>
+  	<%= collection_select(:pavimento, :empreendimento_id, @empreendimentos_da_empresa, :id, :nome_do_empreendimento, {:selected => @empreendimento_escolhido}) %><br />
+    
+  </div>
+  <div style="min-height: 15px;"></div>
+  <div class="field">
+    <%= f.text_field :andar %>
+    <%= f.label :andar %><br />
+  </div>
+  <div class="field">
+    <%= f.file_field :pavimento_imagem %>
+    <%= f.label "Planta do Pavimento" %><br />
+  </div>
+  <div style="min-height: 15px;"></div>
+  <div class="actions">
+    <%= f.submit "Salvar", :class=>"button red"%>
+  </div>
+  <div style="min-height: 15px;"></div>
+<% end %>
+</div>

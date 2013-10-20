@@ -1,0 +1,10 @@
+<%= javascript_include_tag 'jquery' %>
+<%= javascript_include_tag 'autofill' %>
+
+
+
+
+
+<%= render 'form' %>
+
+<%= link_to 'Voltar', :controller => "espacos", :action => "dashboard" %>

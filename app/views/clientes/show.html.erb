@@ -1,0 +1,150 @@
+<article class="container_12">
+	<section class="grid_4" style="float: left">
+		<div class="block-border"><div class="block-content">
+			<h1>Cliente</h1>
+			<p>
+				<h3><%= @cliente.empresa.nome %></h3>
+				<b class="smaller">Empresa</b>
+			</p>
+			<p>
+				<h3><%= @cliente.tipo %></h3>
+				<b class="smaller">Tipo</b>
+			</p>
+			<p>
+				<h3><%= @cliente.nome %></h3>
+				<b class="smaller">Nome</b>
+			</p>
+			<p>
+				<h3><%= @cliente.cpf_cnpj %></h3>
+				<b class="smaller">Cpf cnpj</b>
+			</p>
+			<p>
+				<h3><%= @cliente.endereco %></h3>
+				<b class="smaller">Endereco</b>
+			</p>
+			<p>
+				<h3><%= @cliente.ddd + ' - ' + @cliente.telefone %></h3>
+				<b class="smaller">Telefone</b>
+			</p>
+			<p>
+				<h3><%= @cliente.nome_contato %></h3>
+				<b class="smaller">Nome contato</b>
+			</p>
+		</div></div>
+	</section>
+<% if @historicos %>
+<section class="grid_8" style="float: right;">
+	<div class="block-border" style="width: 500px;">
+		<table class="table" cellspacing="0" width="500px">
+			<thead>
+				<tr>
+					<!-- This is a special cell for loading statuses - see below for more -->
+					<th scope="col">Data</th>
+					<th scope="col">Vendedor</th>
+					<th scope="col">Observacao</th>
+					<!--<th scope="col" class="table-actions">Ações</th>-->
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="6"><img src="<%= asset_path 'images/icons/fugue/arrow-curve-000-left.png' %>" width="16" height="16" class="picto"><b>Total:</b> <%= @historicos.size %> cadastros encontrados</td>
+					<!-- ><td><a href="#" class="button"><img src="images/icons/fugue/cross-circle.png" width="16" height="16"> delete all</a></td> -->
+				</tr>
+			</tfoot>
+			<tbody>
+				<% @historicos.uniq.each do |historico| %>
+				<% @data= historico.updated_at %>
+				<tr>
+					<td><%= link_to @data.to_date.strftime('%d, %b %Y'),  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post" %> </td>
+					<td><%= link_to historico.usuario.nome,  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post" %></td>
+					<td><%= link_to historico.negociacao[0,30] + "...",  {:controller => "clientes", :action => "seleciona_negociacao", :id => historico}, :method => "post" %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+<div class="clear"></div>
+<div style="min-height: 15px;"></div>
+<!--<article class="container_12"> -->
+
+	<% unless @negociacao.nil? %>
+<div class="block-border" style="max-width: 500px">
+		<h1>Negociação:</h1>
+	<span> Data: </span>
+	<b><%= @negociacao.updated_at.to_date.strftime('%d, %b %Y') %></b>
+	<span style="margin-left: 10px;"> Vendedor </span>
+	<b><%= @negociacao.usuario.nome %></b>
+	<span style="margin-left: 10px;"> Empreendimento </span>
+	<b><%= @negociacao.empreendimento.nome_do_empreendimento %></b>
+	<span style="margin-left: 10px;"> Sala </span>
+	<b><%= @negociacao.espaco.andar %></b>
+	<div class="clear" style="min-height: 10px;"></div>
+	<div style="max-width: 500px;">
+		<div class="block-content no-title">
+		<%= @negociacao.negociacao %>
+		</div>
+	</div>
+</div>
+<div style="min-height: 15px;"></div>
+<div style="float: left; min-height: 15px;"></div>
+<div class="block-border" style="float: left;">
+	<table>
+	<h1>Simulação</h1>
+  <thead>
+  	<tr>
+
+    <th><div scope="col" class="block-border" style="margin-right: 2px; min-width: 50px"><b>Valor Total</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Entrada %</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Valor Entrada</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>Saldo</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>CUB</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>30</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>36</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>48</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>48+</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>60</b></div></th>
+    <th><div class="block-border" style="margin-right: 2px; min-width: 50px"><b>60+</b></div></th>
+	</tr>
+	</thead>
+
+<tr class="block-content no-title">
+  <td> <%= @negociacao.simulacao.valor_total.to_money('brl') %> </td>
+	<td> <%= @negociacao.simulacao.entrada %> </td>
+	<td> <%= @negociacao.simulacao.valor_entrada.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.saldo.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.cub %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_30.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_36.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_48.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_48_juros.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_60.to_money("BRL") %> </td>
+	<td> <%= @negociacao.simulacao.parcelas_60_juros.to_money("BRL") %> </td>
+</tr>
+<tr class="block-content dark-bg no-title">
+	<% unless @negociacao.simulacao.cub.nil? or @negociacao.simulacao.cub == 0 %>
+	<td> <%= (@negociacao.simulacao.valor_total/@negociacao.simulacao.cub).to_money(:brl) if @negociacao.simulacao.valor_total %> </td>
+	<td></td>
+	<td> <%= (@negociacao.simulacao.valor_entrada/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.valor_entrada %> </td>
+	<td> <%= (@negociacao.simulacao.saldo/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.saldo %> </td>
+	<td> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_30/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_30 %> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_36/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_36 %> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_48/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_48 %> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_48_juros/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_48_juros %> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_60/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_60 %> </td>
+	<td> <%= (@negociacao.simulacao.parcelas_60_juros/@negociacao.simulacao.cub).to_money("BRL") if @negociacao.simulacao.parcelas_60_juros %> </td>
+	<% end %>
+</tr>
+
+</table>
+
+</div>
+	<% end %>
+</section>
+<% end %>
+</article>
+</article>
+<div>
+	<%= link_to 'Editar Dados do Cliente', edit_cliente_path(@cliente), :class =>"button" %> |
+	<%= link_to 'Voltar', clientes_path, :class => "button" %>
+</div>

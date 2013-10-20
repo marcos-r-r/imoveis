@@ -1,0 +1,130 @@
+
+ <div style ="float:left; margin-left:15px; margin-right:10px"><div class ="block-content dark-bg">
+<h1>Dashboard</h1>
+<%= form_tag({:controller => "espacos", :action => "popula_pavimento_por_empreendimento"},:class =>"form", :method => "post") do %>
+
+<% if @empreendimento_escolhido.nil? %>
+<% @empreendimento = nil %>
+<% else %>
+<% @empreendimento = @empreendimento_escolhido.id %>
+<% end %>
+<% unless @empreendimentos.nil? -%>
+<%= collection_select(nil, :empreendimento_id, @empreendimentos, :id, :nome_do_empreendimento, {:selected => @empreendimento}, {:class => "full-width", :onchange => "this.form.submit()"})%>
+<p>Empreendimento</p>
+<% end -%>
+<!-- <%= submit_tag("Selecione o Empreendimento") %> -->
+<% end %>
+</br>
+<%= form_tag({:controller => "espacos", :action => "popula_lista_por_pavimento"}, :class =>"form", :method => "post") do %>
+<% if @pavimento_escolhido.nil? %>
+<% @pavimento = nil %>
+<% else %>
+<% @pavimento = @pavimento_escolhido.id %>
+<% end %>
+<% unless @pavimentos.nil? -%>
+<%= collection_select(nil, :pavimento_id, @pavimentos, :id, :andar, {:selected => @pavimento, prompt: "Todos"}, {:class => "full-width", :onchange => "this.form.submit()"})%>
+<p>Pavimento</p>
+<% end -%>
+<%= select nil, :status_id, options_for_select([["Todos", ""],["Livre", "0"], ["Em negociação", "1"], ["Vendida", "2"], ["Pendente de Avaliação", "3"], ["Negociação Avaliada", "4"]],@status), {}, {:class => "full-width", :onchange => "this.form.submit()"}%>
+<p>Status</p>
+<!-- <%= submit_tag("Selecione o Pavimento") %> -->
+<% end %>
+
+</div></div>
+
+
+
+<!-- The class dark-grey-gradient is optional, it just changes background color -->
+
+
+
+
+
+
+<ul class="grid dark-grey-gradient">
+<% @espacos_do_pavimento.each do |espaco| %>
+	<% @negociacao = HistoricoDeContato.find_last_by_espaco_id(espaco.id) %>
+    <% @color = "" %>
+    <% if @negociacao.try(:espaco) %>
+      <% @calculo_data_limite = @negociacao.try(:updated_at).try(:to_date) + @negociacao.espaco.empreendimento.dias_val_neg %>
+      <% if @calculo_data_limite < (Date.today + 3) %>
+        <% @color = "#d82247" %>
+      <% end -%>
+    <% end -%>
+	<% if @negociacao %>
+		<% @vendedor_da_negociacao = @negociacao.usuario %>
+		<% else %>
+		<% @vendedor_da_negociacao = @current_usuario %>
+	<% end %>
+    <% case espaco.status %>
+    <% when 1 %>
+    <% @acao = "show" %>
+    <% @label = "Reservado.png" %>
+    <% @info = "Em negociação" %>
+    <% @data_limite = "Data limite: " + (@negociacao.updated_at.to_date + @negociacao.espaco.empreendimento.dias_val_neg).strftime('%d/%m/%Y') %>
+  <tr bgcolor="#95c1a2">
+    <% when 2 %>
+    <% @acao = "show" %>
+    <% @label = "Vendido.png" %>
+    <% @info = "Vendida" %>
+    <% @data_limite = '' %>
+  <tr bgcolor="#d82247">
+    <% when 3 %>
+    <% @acao = "show" %>
+    <% @label = "_Works.png" %>
+    <% @info = "Pendente de avaliação" %>
+    <% @data_limite = "Data limite: " + (@negociacao.updated_at.to_date + @negociacao.espaco.empreendimento.dias_val_neg).strftime('%d/%m/%Y')%>
+  <tr bgcolor="#000000">
+    <% when 4 %>
+    <% @acao = "show" %>
+    <% @label = "tick-circle.png" %>
+    <% @info = "Negociação Avaliada" %>
+    <% @data_limite = "Data limite: " + (@negociacao.updated_at.to_date + @negociacao.espaco.empreendimento.dias_val_neg).strftime('%d/%m/%Y') %>
+  <tr bgcolor="#000000">
+    <% when 5 %>
+    <% @acao = "show" %>
+    <% @label = "cross-circle.png" %>
+    <% @info = "Negociação Recusada" %>
+    <% @data_limite = "Data limite: " + (@negociacao.updated_at.to_date + @negociacao.espaco.empreendimento.dias_val_neg).strftime('%d/%m/%Y') %>
+  <tr bgcolor="#dddddd">
+    <% when 0, nil %>
+    <% @acao = "new" %>
+    <% @label = "Disponivel.png" %>
+    <% @info = "Disponível" %>
+    <% @data_limite = '' %>
+  <tr bgcolor="#FFF">
+    <% end %>
+    <li style="width:230px">
+
+
+        <!-- The class user displays a user icon, other available classes : computer, chart, print, warning -->
+       <%= link_to_unless((@acao == 'show' and @current_usuario.tipo == 'Vendedor' and @current_usuario != @vendedor_da_negociacao),  "<div class='grid-picto #{@label}'>
+						<legend>#{image_tag @label}</legend>
+            <small class='smaller'>#{ @info }</small><br>
+            <small class='smaller' style='color:#{ @color }'>#{ @data_limite }</small><br><br>
+            <small><strong>#{ espaco.tipo_de_espaco }</strong></small>
+            <p class='grid-name'>#{espaco.identificacao}</p>
+            <p class='grid-details'>Area total: <b>#{ espaco.area_total }</b><br>
+            Valor CUB: <b>#{number_to_currency(espaco.empreendimento.cub, :unit=> 'R$', :separator => ",", :delimiter => ".") }</b><br>
+            Valor Total: <b>#{ number_to_currency(espaco.valor_total, :unit=> 'R$', :separator => ",", :delimiter => ".") }</b></p>
+        </div>".html_safe,  :controller =>"historico_de_contatos", :action => @acao, :espaco => espaco.id) %>
+        <ul class="grid-actions">
+
+            <!-- Put anything you want in this list -->
+						<li><%= link_to image_tag('/images/icons/fugue/image.png', :alt=>""), espaco.planta.url, :target => "_blank", :class=>"with-tip", :title=>"Planta"  if espaco.planta %></li>
+						<!-- <li><%= link_to image_tag('/images/icons/fugue/pencil.png'), :controller =>"historico_de_contatos", :action => @acao, :espaco => espaco.id, :class=>"with-tip", :title=>@label %></li>-->
+        </ul>
+    </li>
+
+
+
+
+
+
+
+  </tr>
+<% end %>
+</ul>
+<!-- </table> -->
+
+<br />

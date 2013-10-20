@@ -1,0 +1,4 @@
+alert('salvo')
+$('table#rating').replaceWith("<%= escape_javascript(render :partial => 'home/rating') %>");
+
+

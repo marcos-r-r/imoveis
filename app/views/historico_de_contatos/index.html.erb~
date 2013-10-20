@@ -1,0 +1,37 @@
+<h1>Listing historico_de_contatos</h1>
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Cliente</th>
+    <th>Espaco</th>
+    <th>Usuario</th>
+    <th>Empresa</th>
+    <th>Empreendimento</th>
+    <th>Negociacao</th>
+    <th>Simulacao</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @historico_de_contatos.each do |historico_de_contato| %>
+  <tr>
+    <td><%= historico_de_contato.data %></td>
+    <td><%= historico_de_contato.cliente_id %></td>
+    <td><%= historico_de_contato.espaco_id %></td>
+    <td><%= historico_de_contato.usuario_id %></td>
+    <td><%= historico_de_contato.empresa_id %></td>
+    <td><%= historico_de_contato.empreendimento_id %></td>
+    <td><%= historico_de_contato.negociacao %></td>
+    <td><%= historico_de_contato.simulacao_id %></td>
+    <td><%= link_to 'Show', historico_de_contato %></td>
+    <td><%= link_to 'Edit', edit_historico_de_contato_path(historico_de_contato) %></td>
+    <td><%= link_to 'Destroy', historico_de_contato, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Historico de contato', new_historico_de_contato_path %>

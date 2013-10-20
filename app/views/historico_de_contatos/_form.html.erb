@@ -1,0 +1,133 @@
+<%= form_for @historico_de_contato, :html => {:class => "form"} do |f| %>
+    <% if @historico_de_contato.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@historico_de_contato.errors.count, "error") %> prohibited this historico_de_contato from
+            being saved:</h2>
+
+          <ul>
+            <% @historico_de_contato.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
+    <section class="grid_12">
+      <div class="block-border">
+        <div class="block-content">
+          <h1>Negociação</h1>
+
+          <div class="content-columns left30">
+
+            <div class="content-columns-sep"></div>
+            <div class="content-left">
+              <div class="dark-grey-gradient with-padding" style="height:500px; overflow: auto">
+
+                <div class="" style="float:left; margin-right:15px;">
+                  <!--<h1><%= f.label :data %></h1>-->
+                  <%= f.hidden_field :data %>
+                  <span>Cliente</span>
+                  <%= collection_select(:historico_de_contato, :cliente_id, @clientes, :id, :nome, {:prompt => 'Selecione o Cliente'}) %>
+                </div>
+                <div class="">
+                  <span>Usuario</span>
+                  <%= f.label @current_usuario.nome %>
+                  <%= f.hidden_field :usuario_id, :value => @current_usuario.id %>
+                </div>
+
+
+                <div class="favorites" style="float:left; margin-right:15px;">
+                  <h3 style="color:#cccccc;">Tipo</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.tipo_de_espaco if @espaco %></h5></ul>
+                </div>
+                <div class="favorites">
+                  <h3 style="color:#cccccc;">Unidade</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.identificacao if @espaco %></h5></ul>
+                  <%= f.hidden_field :espaco_id, :value => @espaco.id if @espaco %>
+                </div>
+                <div class="favorites" style="">
+                  <h3 style="color:#cccccc;">Nº garagem</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.try(:numero_garagem) if @espaco %></h3></ul>
+                  <h3 style="color:#cccccc;">Área garagem</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.try(:area_garagem) if @espaco %></h3></ul>
+                  <h3 style="color:#cccccc;">Área comum</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.try(:area_comum) if @espaco %></h3></ul>
+                  <h3 style="color:#cccccc;">Área privativa</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.try(:area_privativa) if @espaco %></h3></ul>
+                  <h3 style="color:#cccccc;">Área total</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.try(:area_total) if @espaco %></h3></ul>
+                  <h3 style="color:#cccccc;">Valor CUB</h3>
+                  <ul class="button">
+                    <h3 class="big"><%= number_to_currency(@espaco.empreendimento.cub, :unit => 'R$', :separator => ",", :delimiter => ".") if @espaco %></h3>
+                  </ul>
+                  <h3 style="color:#cccccc;">Valor Total</h3>
+                  <ul class="button">
+                    <h3 class="big"><%= number_to_currency(@espaco.valor_total, :unit => 'R$', :separator => ",", :delimiter => ".") if @espaco %></h3>
+                  </ul>
+                </div>
+                <div>
+
+                  <% unless @current_usuario.empresa_id != "1" %>
+                      <%= hidden_field(:historico_de_contato, :empresa_id, {:value => session[:empresa_atual].id}) %>
+                  <% else %>
+                      <%= hidden_field(:historico_de_contato, :empresa_id, :value => @current_usuario.empresa_id) %>
+                  <% end %>
+                </div>
+                <div style="min-height:20px"></div>
+                <div class="favorites">
+                  <h3 style="color:#cccccc;">Empreendimento</h3>
+                  <ul class="button"><h3 class="big"><%= @espaco.empreendimento.nome_do_empreendimento %></h5></ul>
+                  <%= f.hidden_field :empreendimento_id, :value => @espaco.empreendimento_id if @espaco %>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="content-right">
+              <div class="dark-grey-gradient with-padding" style="height:500px; overflow: auto">
+
+
+                <div class="field">
+
+                  <%= button_tag "Simulacao", :type => "button", :class => "simulador" %>
+                  <div id="pegardados_simulador" style="display: none;">
+
+                    <%= f.fields_for :simulacao do |b| %>
+                        <%= render "simulador", :f => b %>
+
+                    <% end %>
+
+
+                    <div id="msg_autofill" style="display: none;">
+                    </div>
+                  </div>
+                </div>
+                <div class="favorites">
+                  <h3 style="color:#cccccc;">Detalhes da Negociação</h3>
+                  <%= f.text_area :negociacao, size:"120x10" %>
+                </div>
+                <ul class="checkable-list">
+                  <% @current_usuario.tipo == 'Vendedor' ? @disabled = true : @disabled = false %>
+                  <li><%= f.radio_button :status, "0" %> Disponível</li>
+                  <li><%= f.radio_button :status, "1" %> Em negociação</li>
+                  <li><%= f.radio_button :status, "3" %> Em avaliação</li>
+                  <li><%= f.radio_button :status, "4", {disabled: @disabled} %> Negociação avaliada</li>
+                  <li><%= f.radio_button :status, "2", {disabled: @disabled} %> Vendida</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="block-footer" style="min-height:30px;">
+            <div class="float-right">
+              <% @message_button = :status == "4" ? "Finalizar Venda" : "Salvar Negociação" %>
+              <%= f.submit @message_button, :class => "button red" %>
+              <%= link_to 'Voltar', {:controller => "espacos", :action => "dashboard"}, :class => "button" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+<% end %>

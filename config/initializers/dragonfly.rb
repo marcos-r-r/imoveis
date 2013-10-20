@@ -1,0 +1,5 @@
+require 'dragonfly/rails/images'
+
+
+
+

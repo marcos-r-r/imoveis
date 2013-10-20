@@ -1,0 +1,8 @@
+<%= javascript_include_tag 'jquery' %>
+<%= javascript_include_tag 'autofill' %>
+<%= javascript_include_tag 'jquery.maskMoney' %>
+<h1>New espaco</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', espacos_path %>

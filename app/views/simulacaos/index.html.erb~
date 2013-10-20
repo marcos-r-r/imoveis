@@ -1,0 +1,32 @@
+<h1>Listing simulacaos</h1>
+
+<table>
+  <tr>
+    <th>Valor total</th>
+    <th>Entrada</th>
+    <th>Valor entrada</th>
+    <th>Saldo</th>
+    <th>Cub</th>
+    <th>Historico</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @simulacaos.each do |simulacao| %>
+  <tr>
+    <td><%= simulacao.valor_total %></td>
+    <td><%= simulacao.entrada %></td>
+    <td><%= simulacao.valor_entrada %></td>
+    <td><%= simulacao.saldo %></td>
+    <td><%= simulacao.cub %></td>
+    <td><%= simulacao.historico_de_contato_id %></td>
+    <td><%= link_to 'Show', simulacao %></td>
+    <td><%= link_to 'Edit', edit_simulacao_path(simulacao) %></td>
+    <td><%= link_to 'Destroy', simulacao, :confirm => 'Are you sure?', :method => :delete, remote: true, :class=>'delete_simulacao' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Simulacao', new_simulacao_path %>

@@ -1,0 +1,29 @@
+<h1>Listing vaga_associadas</h1>
+
+<table>
+  <tr>
+    <th>Identificacao</th>
+    <th>Espaco</th>
+    <th>Id unidade negociada</th>
+    <th>Historico de contato</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vaga_associadas.each do |vaga_associada| %>
+  <tr>
+    <td><%= vaga_associada.identificacao %></td>
+    <td><%= vaga_associada.espaco_id %></td>
+    <td><%= vaga_associada.id_unidade_negociada %></td>
+    <td><%= vaga_associada.historico_de_contato_id %></td>
+    <td><%= link_to 'Show', vaga_associada %></td>
+    <td><%= link_to 'Edit', edit_vaga_associada_path(vaga_associada) %></td>
+    <td><%= link_to 'Destroy', vaga_associada, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vaga associada', new_vaga_associada_path %>

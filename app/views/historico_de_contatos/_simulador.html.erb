@@ -1,0 +1,54 @@
+<p>
+	<table>
+	Simulação
+  	<tr>
+    
+    <th>Valor <br>Total</th>
+    <th>Entrada %</th>
+    <th>Valor <br>Entrada</th>
+    <th>Saldo</th>
+    <th>CUB</th>
+    <th>12</th>
+    <th>24</th>
+    <th>50</th>
+<tr>
+  <td> <%= f.text_field :valor_total, :size => 8, :value=> @espaco.valor_total, :class =>"simulador_field" %> </td>
+	<td> <%= f.text_field :entrada,:size => 8, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :valor_entrada,:size => 8, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :saldo,:size => 8, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :cub, :value => (@espaco.empreendimento.cub if @espaco.empreendimento.cub), :size => 8, :class =>"simulador_field" %> </td> <td> <%= f.text_field :parcelas_12,:size => 8, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_24,:size => 8, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_50,:size => 8, :class =>"simulador_field" %> </td> 
+</tr> 
+</table>
+<% if @historico_de_contato.simulacao.parcelas_30 && @historico_de_contato.simulacao.parcelas_12.nil?  %>
+	<table>
+		Simulação Antiga
+	  	<tr>
+	    
+	    <th>Valor <br>Total</th>
+	    <th>Entrada %</th>
+	    <th>Valor <br>Entrada</th>
+	    <th>Saldo</th>
+	    <th>30</th>
+	    <th>36</th>
+	    <th>48</th>
+	    <th>48+</th>
+	    <th>60</th>
+	    <th>60+</th>
+	<tr>
+	  <td> <%= f.label "valor_total",:value=> @espaco.valor_total %> </td>
+		<td> <%= f.label "entrada",:value=> @historico_de_contato.simulacao.entrada %> </td> 
+		<td> <%= f.label "valor_entrada", :value=> @historico_de_contato.simulacao.entrada %> </td> 
+		<td> <%= f.label "saldo" %>, :value=> @historico_de_contato.simulacao.saldo </td> 
+		<td> <%= f.label "parcelas_30" %>, :value=> @historico_de_contato.simulacao.parcelas_30 </td> 
+		<td> <%= f.label "parcelas_36" %>, :value=> @historico_de_contato.simulacao.parcelas_36 </td> 
+		<td> <%= f.label "parcelas_48" %>, :value=> @historico_de_contato.simulacao.parcelas_48 </td> 
+		<td> <%= f.label "parcelas_48_juros", :value=> @historico_de_contato.simulacao.parcelas_48_juros %> </td> 
+		<td> <%= f.label "parcelas_60", :value=> @historico_de_contato.simulacao.parcelas_60 %> </td> 
+		<td> <%= f.label "parcelas_60_juros", :value=> @historico_de_contato.simulacao.parcelas_60_juros %> </td>
+	</tr> 
+	</table>
+<% end -%>
+
+</p>

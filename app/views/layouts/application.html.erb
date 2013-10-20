@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Imóveis</title>
+  <%= stylesheet_link_tag    "css/reset.css" %>
+  <%= stylesheet_link_tag    "css/common.css" %>
+  <%= stylesheet_link_tag    "css/form.css" %>
+  <%= stylesheet_link_tag    "css/standard.css" %>
+  <%= stylesheet_link_tag    "css/960.gs.fluid.css" %>
+  <%= stylesheet_link_tag    "css/simple-lists.css" %>
+  <%= stylesheet_link_tag    "css/block-lists.css" %>
+  <%= stylesheet_link_tag    "css/planning.css" %>
+  <%= stylesheet_link_tag    "css/table.css" %>
+  <%= stylesheet_link_tag    "css/calendars.css" %>
+  <%= stylesheet_link_tag    "css/wizard.css" %>
+  <%= stylesheet_link_tag    "css/gallery.css" %>
+  <%= stylesheet_link_tag    "css/special-pages.css" %>
+  <%= stylesheet_link_tag    "ui-lightness/jquery-ui-1.8.16.custom.css" %>
+
+  <%= javascript_include_tag "application" %>
+
+  <%= javascript_include_tag "js/html5.js" %>
+  <!-- <%= javascript_include_tag "jquery-1.6.2.min.js" %>-->
+  <%= javascript_include_tag "js/old-browsers" %>
+
+  <%= javascript_include_tag "js/common.js" %>
+  <%= javascript_include_tag "js/standard.js" %>
+  <%= javascript_include_tag "js/jquery.hashchange.js" %>
+  <%= javascript_include_tag "js/jquery.tip.js" %>
+  <%= javascript_include_tag "js/jquery.accessibleList.js" %>
+  <%= javascript_include_tag "js/jquery.contextMenu.js" %>
+  <%= javascript_include_tag "jquery-ui-1.8.16.custom.min" %>
+  <%= csrf_meta_tag %>
+
+  <!-- Example context menu -->
+
+<body>
+<header><div class="container_12">
+
+  <p id="skin-name"><small>Imóveis</small> <strong>1.0</strong></p>
+  <div class="server-info">Data: <strong> <%= Date.today %></strong></div><br>
+  <% if @current_usuario %>
+      <% if @empresa_do_usuario.try(:empresa_logomarca) %>
+          <div class="server-info" style="min-height: 43px; padding-top: 6px"><%= image_tag(@empresa_do_usuario.empresa_logomarca.thumb('50x100').url) %></div>
+      <% end -%>
+  <% end -%>
+  </strong></div>
+
+  </div></header>
+
+
+<!-- Main nav -->
+<% if @current_usuario %>
+    <nav id="main-nav">
+      <ul class="container_12">
+        <li class="home <%= 'current' if @current_action == 'dashboard' or @current_controller == 'simulacaos' %>"><a href="/" title="Home">Home</a>
+          <ul>
+            <li class="<%= 'current' if @current_controller == 'espacos' and @current_action == 'dashboard'%> "><a href="/" title="Dashboard">Dashboard</a></li>
+
+            <!-- ><li class="<%= 'current' if @current_controller == 'simulacaos' %>"><a href="historico_de_contatos/simulador.html.erb" title="Simulador">Simulador</a> -->
+
+        </li>
+      </ul>
+      </li>
+      <li class="write <%= 'current' if @current_controller == 'usuarios' or
+              @current_controller == 'empresas' or
+              @current_controller == 'clientes' or
+              @current_controller == 'empreendimentos' or
+              @current_controller == 'pavimentos' or
+              @current_controller == 'espacos' and @current_action != 'dashboard' %>"><a href="#" title="Cadastros">Cadastros</a>
+        <ul>
+
+          <% if @current_usuario.tipo != "Vendedor"%>
+              <% if @current_usuario.empresa_id == '1' %>
+                  <li class="<%= 'current' if @current_controller == 'empresas' %>"><a href="/empresas" title="Empresas">Empresas</a></li>
+              <% end %>
+              <li class="<%= 'current' if @current_controller == 'usuarios' %>"><a href="/usuarios" title="Usuarios">Usuários</a></li>
+              <li class="<%= 'current' if @current_controller == 'empreendimentos' %>"><a href="/empreendimentos" title="Empreendimentos">Empreendimentos</a></li>
+              <li class="<%= 'current' if @current_controller == 'pavimentos' %>"><a href="/pavimentos" title="Pavimentos">Pavimentos</a></li>
+              <li class="<%= 'current' if @current_controller == 'espacos' and @current_action != 'dashboard' %>"><a href="/espacos" title="Espacos">Espaços</a></li>
+              <li class="<%= 'current' if @current_controller == 'clientes' %>"><a href="/clientes" title="Clientes">Clientes</a></li>
+              </ul>
+              </li>
+
+              <li class="stats <%= 'current' if @current_controller == 'estatisticas' %>"><a href="/estatisticas" title="Stats">Estatística</a></li>
+          <% else %>
+              <li class="<%= 'current' if @current_controller == 'clientes' %>"><a href="/clientes" title="Clientes">Clientes</a></li>
+              </ul>
+              </li>
+          <% end %>
+
+<% else %>
+    <nav id="main-nav">
+      <ul class="container_12">
+        <div class="clear" style="float: left"></div>
+
+<% end %>
+
+</ul>
+</nav>
+<!-- End main nav -->
+
+<!-- Sub nav -->
+<div id="sub-nav"><div class="container_12">
+
+
+
+</div></div>
+<!-- End sub nav -->
+
+<!-- Status bar -->
+<div id="status-bar"><div class="container_12">
+  <div style="float:right">
+    <ul id="status-infos">
+      <% if @current_usuario %>
+          <li class="spaced">Olá <strong><%= @current_usuario.nome if @current_usuario %></strong> logado na:
+            <% unless current_usuario.empresa_id == "1" || current_usuario.empresa_id.nil? %>
+
+
+                <%= Empresa.find_by_id(current_usuario.empresa_id).nome %>.
+
+            <% else %>
+                <div style="float:right; margin-left:5px;">
+
+
+                  <form id="form" name="qualquer" class="form" 	action="/empresas/atualiza_empresa" method="post">
+                    <select name="empresa_atual">
+                      <% for empresa in @lista_empresas %>
+                          <option <%= 'selected' if !session[:empresa_atual].nil? and empresa.id == session[:empresa_atual].id %> value="<%= empresa.id %>"><%= empresa.nome %></option>
+                      <% end %>
+
+                    </select>
+                    <input type="submit" value="Selecionar Empresa" class="button">
+                  </form>
+            <% end %>
+      <% end %>
+      </div>
+      </li>
+      <li>
+        <% if @current_usuario %>
+            <a href="/logout" class="button red" title="Logout"><span class="smaller">LOGOUT</span></a>
+        <% end %>
+      </li>
+  </div>
+  </ul>
+  <!--<ul id="breadcrumb">
+
+			 <%= render 'layouts/breadcrumb' %>
+
+		</ul>-->
+
+</div></div>
+<!-- End status bar -->
+
+<div id="header-shadow"></div>
+<!-- End header -->
+
+<!-- Always visible control bar -->
+
+<!-- End control bar -->
+
+<!-- Content -->
+<!-- <%= @current_controller %> -->
+<article class="container_12">
+
+
+
+  <%= yield %>
+
+  <div id="name" style="min-height: 40px;">
+
+  </div>
+
+  <% @mensagem = "<div style=\"background-color: white; padding-top: 10px; padding-botton: 10px; text-align: center;\">
+		<small></small><br><br> #{ image_tag '/images/logosoft.png'} <br><br> <small>Rua João Marcatto, 13 - Sala 101 Centro, Jaraguá do Sul-SC, CEP:89251-670 <br> Tel (47) 3373-5653 </small><br><br><smaller style=\"color: black\"> www.softsimples.com.br </smaller><br><br></div>"%>
+</article>
+<!-- End content -->
+
+<footer>
+
+  <div class="float-right">
+    <a href="#top" class="button"><img src="/images/icons/fugue/navigation-090.png" width="16" height="16"> Voltar para o topo</a>
+  </div>
+
+
+  <!--<div class="" style="text-align: center; padding: 5px;">-->
+    <!--<a href="javascript:notify('<%= @mensagem %>');" style="color: grey" ><smaller> Desenvolvido por SoftSimples® </smaller></a>-->
+  <!--</div>-->
+</footer>
+<!--[if lt IE 8]></div><![endif]-->
+<!--[if lt IE 9]></div><![endif]-->
+</body>
+</html>

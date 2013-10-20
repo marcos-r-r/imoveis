@@ -1,0 +1,45 @@
+<p>
+	<table>
+	Simulação
+  	<tr>
+    
+    <th>Valor Total</th>
+    <th>Entrada %</th>
+    <th>Valor <br>Entrada</th>
+    <th>Saldo</th>
+    <th>CUB</th>
+    <th>30</th>
+    <th>36</th>
+    <th>48</th>
+    <th>48+</th>
+    <th>60</th>
+    <th>60+</th>
+<tr>
+  <td> <%= f.text_field :valor_total, :size => 5, :value=> @espaco.valor_total, :class =>"simulador_field" %> </td>
+	<td> <%= f.text_field :entrada,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :valor_entrada,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :saldo,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :cub,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_30,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_36,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_48,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_48_juros,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_60,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= f.text_field :parcelas_60_juros,:size => 5, :class =>"simulador_field" %> </td>
+</tr> 
+<tr>
+	<td> <%= text_field_tag "valor_total_cub", nil, :size => 5, :class =>"simulador_field" %> </td>
+	<td></td> 
+	<td> <%= text_field_tag "valor_entrada_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "saldo_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> </td> 
+	<td> <%= text_field_tag "parcelas_30_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_36_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_48_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_48_juros_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_60_cub", nil,:size => 5, :class =>"simulador_field" %> </td> 
+	<td> <%= text_field_tag "parcelas_60_juros_cub", nil,:size => 5, :class =>"simulador_field" %> </td>
+</tr>
+</table>
+
+</p>

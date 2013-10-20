@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  empresa_id: MyString
+  tipo: MyString
+  nome: MyString
+  cpf_cnpj: MyString
+  endereco: MyString
+  ddd: MyString
+  telefone: MyString
+  nome_contato: MyString
+
+two:
+  empresa_id: MyString
+  tipo: MyString
+  nome: MyString
+  cpf_cnpj: MyString
+  endereco: MyString
+  ddd: MyString
+  telefone: MyString
+  nome_contato: MyString

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Codigo:</b>
+  <%= @empreendimento.codigo %>
+</p>
+
+<p>
+  <b>Nome:</b>
+  <%= @empreendimento.nome_do_empreendimento %>
+</p>
+<p>
+  <b>Ativo:</b>
+  <%= check_box_tag @empreendimento, @empreendimento.ativo, @empreendimento.ativo,  :disabled => true %>
+
+</p>
+
+
+<%= link_to 'Edit', edit_empreendimento_path(@empreendimento) %> |
+<%= link_to 'Back', empreendimentos_path %>
