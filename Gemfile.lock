@@ -150,6 +150,7 @@ GEM
 PLATFORMS
   ruby
 
+
 DEPENDENCIES
   annotate
   authlogic
