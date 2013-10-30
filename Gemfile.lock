@@ -161,8 +161,7 @@ DEPENDENCIES
   jquery-rails
   lazy_high_charts!
   money
-  mysql2
-  pry  
+  mysql2  
   rails_best_practices
   railties
   spreadsheet (~> 0.6.5.9)
