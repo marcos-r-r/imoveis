@@ -160,10 +160,4 @@ DEPENDENCIES
   inploy
   jquery-rails
   lazy_high_charts!
-  money  
-  rails_best_practices
-  railties
-  spreadsheet (~> 0.6.5.9)
-  therubyracer
-  turn
-  uglifier
+  
