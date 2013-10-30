@@ -162,8 +162,7 @@ DEPENDENCIES
   lazy_high_charts!
   money
   mysql2
-  pry
-  rack-cache  
+  pry  
   rails_best_practices
   railties
   spreadsheet (~> 0.6.5.9)
