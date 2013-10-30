@@ -5,6 +5,7 @@ GIT
     lazy_high_charts (1.1.5)
       bundler (~> 1.0)
 
+
 GEM
   remote: http://rubygems.org/
   specs:
