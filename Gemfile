@@ -4,11 +4,8 @@ gem 'rails', '~> 3.2.13'
 gem 'rack', '~> 1.4.5'
 
 
-group :production do
+group :production, :development, :test do
   gem 'mysql2'
-end
-group :development, :test do
-  gem 'sqlite3'
 end
 
 gem 'railties'
