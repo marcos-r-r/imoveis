@@ -3,10 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '~> 3.2.13'
 gem 'rack', '~> 1.4.5'
 
-
-group :production, :development, :test do
-  gem 'mysql2'
-end
+gem 'mysql2'
 
 gem 'railties'
 # Bundle edge Rails instead:
@@ -32,7 +29,7 @@ gem "spreadsheet", "~> 0.6.5.9"
 # in production environments by default.
 group :assets do
   #gem 'sass-rails', "  ~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'coffee-rails', "~> 3"
   gem 'uglifier'
 end
 
@@ -62,7 +59,4 @@ gem 'minitest'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
-end
+
